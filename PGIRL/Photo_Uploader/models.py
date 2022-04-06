@@ -1,8 +1,8 @@
 from django.db import models
 import random
 
-
 class Photo_Data(models.Model):
+
     user_id = models.IntegerField(primary_key=True,
                                   unique=True)  # Unique user ID assigned to users when they create an account
     image = models.ImageField(upload_to='uploads/')
