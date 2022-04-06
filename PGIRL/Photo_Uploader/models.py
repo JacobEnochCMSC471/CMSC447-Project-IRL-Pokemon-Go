@@ -3,8 +3,9 @@ import random
 
 
 class Photo_Data(models.Model):
-    user_id = models.TextField()  # Unique user ID assigned to users when they create an account
-    actual_image = models.ImageField(upload_to='uploads/')
+    user_id = models.IntegerField(primary_key=True,
+                                  unique=True)  # Unique user ID assigned to users when they create an account
+    image = models.ImageField(upload_to='uploads/')
     date_added = models.DateField()
     verified_status = models.BooleanField(default=False)  # Photos will not be verified by default
 
@@ -14,7 +15,7 @@ class Photo_Data(models.Model):
     stat_defense = models.IntegerField(default=0)
     stat_speed = models.IntegerField(default=0)
 
-    def to_str_stats(self):
+    def stats_to_str(self):
         stats = [str(self.stat_hp), str(self.stat_attack), str(self.stat_defense), str(self.stat_speed)]
         return stats
 
