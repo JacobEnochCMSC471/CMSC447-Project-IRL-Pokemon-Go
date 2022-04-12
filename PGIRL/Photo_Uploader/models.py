@@ -2,13 +2,29 @@ from django.db import models
 import random
 
 
+def get_choices(file):  # Converts all lines in animals.txt file to choices for a dropdown box to be used
+    choices = []
+
+    with open(file) as animals:
+        for line in animals:
+            modified_line = line.strip()
+            choices.append((str(modified_line), str(modified_line).upper()))
+
+    return tuple(choices)
+
+
 class Photo_Data(models.Model):
-    user_id = models.IntegerField(primary_key=True,
-                                  unique=True)  # Unique user ID assigned to users when they create an account
+    file = 'media/textfiles/animals.txt'
+
+    choices = get_choices(file)
+
+    # Unique user ID assigned to users when they create an account
+    user_id = models.IntegerField(primary_key=True,unique=True)
 
     image = models.ImageField(upload_to='uploads/')
     date_added = models.DateField(null=True)
     verified_status = models.BooleanField(default=False)  # Photos will not be verified by default
+    user_label = models.CharField(max_length=25, choices=choices, default='None')
 
     # Each photo will have stats associated with them - these will be automatically rolled when added to the database
     stat_hp = models.IntegerField(default=0)

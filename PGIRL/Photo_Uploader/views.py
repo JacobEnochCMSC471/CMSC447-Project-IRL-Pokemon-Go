@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from .forms import User_Image_Upload_Form
 import datetime
+from pyinaturalist import *
 
 
 def landing_page(request):
@@ -9,11 +10,13 @@ def landing_page(request):
 
 
 def upload_photo_to_db(request):
+
     if request.method == 'POST':
-        current_date_time = datetime.datetime.now()
+        current_date_time = datetime.now()
         form = User_Image_Upload_Form(request.POST, request.FILES, current_date_time)
 
         if form.is_valid():
+            print("Saved successfully")
             form.save()
             return redirect('success')
 
@@ -33,4 +36,5 @@ def error(request):
 
 
 def upload_photo_to_iNaturalist(request, user_id):
+
     return HttpResponse("Not implemented Yet")
