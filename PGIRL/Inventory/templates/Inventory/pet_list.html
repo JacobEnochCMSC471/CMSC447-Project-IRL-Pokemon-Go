@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Pet List</title>
+    </head>
+    <body>
+        {% if pet_list %}
+            {% for pet in pet_list %}
+                <div>{{ pet.image }} {{ pet.name }}</div>
+            {% endfor %}
+        {% else %}
+            <p>No pets?</p>
+        {% endif %}
+    </body>
+</html>
