@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from .forms import User_Image_Upload_Form
 import datetime
 from pyinaturalist import *
+import time
 
 
 def landing_page(request):
@@ -13,7 +14,7 @@ def upload_photo_to_db(request):
 
     if request.method == 'POST':
         current_date_time = datetime.now()
-        form = User_Image_Upload_Form(request.POST, request.FILES, current_date_time)
+        form = User_Image_Upload_Form(request.POST, request.FILES, current_date_time, request.POST)
 
         if form.is_valid():
             print("Saved successfully")
@@ -28,7 +29,8 @@ def upload_photo_to_db(request):
 
 
 def success(request):  # Redirect page for when an image is successfully uploaded
-    return HttpResponse('successfully uploaded')
+    time.sleep(1)
+    return redirect('image_upload')
 
 
 def error(request):

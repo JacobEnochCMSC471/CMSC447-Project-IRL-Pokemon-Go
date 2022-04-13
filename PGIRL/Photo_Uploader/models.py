@@ -12,15 +12,28 @@ def get_choices(file):  # Converts all lines in animals.txt file to choices for 
 
     return tuple(choices)
 
+def get_random_name(file):
+    with open(file) as names:
+        file_lines = names.readlines()
+        file_length = len(file_lines) - 1
+
+        random_name_line = random.randrange(0, file_length)
+        random_name = names.readline(random_name_line)
+        random_name = random_name.strip()
+
+    return random_name
+
 
 class Photo_Data(models.Model):
-    file = 'media/textfiles/animals.txt'
+    animals_txt = 'media/textfiles/animals.txt'
+    names_txt = 'media/textfiles/names.txt'
 
-    choices = get_choices(file)
+    choices = get_choices(animals_txt)
+    random_name = get_random_name(names_txt)
 
     # Unique user ID assigned to users when they create an account
-    user_id = models.IntegerField(primary_key=True,unique=True)
-
+    user_id = models.IntegerField(primary_key=True, unique=True)
+    pet_name = models.CharField(max_length=25, default=random_name)  # Allows people to name the photos they upload
     image = models.ImageField(upload_to='uploads/')
     date_added = models.DateField(null=True)
     verified_status = models.BooleanField(default=False)  # Photos will not be verified by default
