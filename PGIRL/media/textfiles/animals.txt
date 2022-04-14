@@ -71,21 +71,15 @@ Cardinal
 Caribou
 Carp
 Cat
-Cat
-Cat
 Caterpillar
 Catfish
 Catshark
-Cattle
-Cattle
 Cattle
 Centipede
 Chameleon
 Cheetah
 Chickadee
 Chicken
-Chicken
-Chicken breeds
 Chimpanzee
 Chinchilla
 Chipmunk
@@ -115,8 +109,6 @@ Deer
 Dingo
 Dinosaur
 Dog
-Dog
-Dog
 Dolphin
 Domestic Bactrian camel
 Domestic canary
@@ -133,14 +125,10 @@ Domestic silkmoth
 Domestic silver fox
 Domestic turkey
 Donkey
-Donkey
-Donkey
-Donkey
 Dormouse
 Dove
 Dragonfly
 Duck
-Duck breeds
 Dung beetle
 Eagle
 Earthworm
@@ -157,7 +145,6 @@ Ermine
 Falcon
 Fancy mouse
 Fancy rat
-Fancy rat
 Felidae
 Ferret
 Ferret
@@ -167,7 +154,7 @@ Fish
 Flamingo
 Flea
 Fly
-Flyingfish
+Flying Fish
 Fowl
 Fox
 Frog
@@ -184,11 +171,8 @@ Gibbon
 Gila monster
 Giraffe
 Goat
-Goat
-Goldfish
 Goldfish
 Goose
-Goose breeds
 Gopher
 Gorilla
 Grasshopper
@@ -242,7 +226,6 @@ Koi
 Komodo dragon
 Krill
 Laboratory rat
-Lab rat
 Ladybug
 Lamprey
 Landfowl

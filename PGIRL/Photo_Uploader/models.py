@@ -12,14 +12,15 @@ def get_choices(file):  # Converts all lines in animals.txt file to choices for 
 
     return tuple(choices)
 
-def get_random_name(file):
+
+def get_random_name(file):  # Pulls a random name from the names.txt file - used for default pet names
     with open(file) as names:
         file_lines = names.readlines()
-        file_length = len(file_lines) - 1
+        file_length = len(file_lines)
 
         random_name_line = random.randrange(0, file_length)
-        random_name = names.readline(random_name_line)
-        random_name = random_name.strip()
+        random_name = file_lines[random_name_line]
+        random_name = random_name.strip('\n')
 
     return random_name
 
@@ -33,17 +34,18 @@ class Photo_Data(models.Model):
 
     # Unique user ID assigned to users when they create an account
     user_id = models.IntegerField(primary_key=True, unique=True)
-    pet_name = models.CharField(max_length=25, default=random_name)  # Allows people to name the photos they upload
-    image = models.ImageField(upload_to='uploads/')
-    date_added = models.DateField(null=True)
+    pet_name = models.CharField(max_length=25, default=random_name, blank=True)  # Allows people to name the photos they upload
+    image = models.ImageField(upload_to='uploads/')  # Directory where photos are uploaded to
+    date_added = models.DateField(null=True)  # Date when photos were uploaded
     verified_status = models.BooleanField(default=False)  # Photos will not be verified by default
-    user_label = models.CharField(max_length=25, choices=choices, default='None')
+    user_label = models.CharField(max_length=25, choices=choices, default='None')  # User-supplied label for the image
 
     # Each photo will have stats associated with them - these will be automatically rolled when added to the database
     stat_hp = models.IntegerField(default=0)
     stat_attack = models.IntegerField(default=0)
     stat_defense = models.IntegerField(default=0)
     stat_speed = models.IntegerField(default=0)
+
 
     def get_stats(self):  # Returns a list of stats in numerical form (hp, attack, defence, speed)
         stats = [self.stat_hp, self.stat_attack, self.stat_defense, self.stat_speed]
@@ -68,7 +70,7 @@ class Photo_Data(models.Model):
     def roll_stats(self):  # Randomly rolls and stats for a photo
         random_values = [None] * 4
 
-        for i in range(4):
+        for i in range(4):  # Generate a list of 4 random values, ranging between 0 and 100
             random_values[i] = random.randrange(0, 100)
 
         self.stat_hp = random_values[0]
