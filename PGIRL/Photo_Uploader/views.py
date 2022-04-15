@@ -6,7 +6,8 @@ from datetime import datetime
 
 
 def landing_page(request):
-    return HttpResponse("This is the landing page")
+
+    return render(request, "base_generic.html")
 
 
 def upload_photo_to_db(request):

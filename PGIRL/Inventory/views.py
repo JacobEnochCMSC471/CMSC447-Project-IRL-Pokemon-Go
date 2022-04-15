@@ -10,11 +10,13 @@ from Photo_Uploader.models import Photo_Data
 def select_list(request):
     return render(request, 'Inventory/select_list.html')
 
+
 def pet_list(request):
     pet_list = Photo_Data.objects.order_by('-pet_name')
     return render(request, 'Inventory/pet_list.html', {
         'pet_list': pet_list
     })
+
 
 def item_list(request):
     item_list = Item.objects.order_by('-name')
