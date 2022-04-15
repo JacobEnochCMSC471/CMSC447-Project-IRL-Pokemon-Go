@@ -7,7 +7,7 @@
     <body>
         {% if pet_list %}
             {% for pet in pet_list %}
-                <div>{{ pet.image }} {{ pet.name }}</div>
+                <div>{{ pet.image }} {{ pet.pet_name }}</div>
             {% endfor %}
         {% else %}
             <p>No pets?</p>
