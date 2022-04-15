@@ -3,7 +3,6 @@ from django.http import HttpResponse, Http404
 from .forms import User_Image_Upload_Form
 from .models import Photo_Data
 import datetime
-from pyinaturalist import *
 
 
 def landing_page(request):
