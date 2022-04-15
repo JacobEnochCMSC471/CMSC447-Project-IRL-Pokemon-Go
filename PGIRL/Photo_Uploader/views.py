@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from .forms import User_Image_Upload_Form
 from .models import Photo_Data
-import datetime
+from datetime import datetime
 
 
 def landing_page(request):
