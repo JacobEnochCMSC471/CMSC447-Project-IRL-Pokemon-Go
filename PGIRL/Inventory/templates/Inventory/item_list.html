@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Item List</title>
+    </head>
+    <body>
+        {% if item_list %}
+            {% for item in item_list %}
+                <div>{{ item.image }} {{ item.name }} {{ item.description }}</div>
+            {% endfor %}
+        {% else %}
+            <p>No items?</p>
+        {% endif %}
+    </body>
+</html>
