@@ -19,7 +19,7 @@ def pet_list(request):
 
 
 def item_list(request):
-    item_list = Item.objects.order_by('-name')
+    items = Item.objects.order_by('-name')
     return render(request, 'Inventory/item_list.html', {
-        'item_list': item_list
+        'item_list': items
     })
