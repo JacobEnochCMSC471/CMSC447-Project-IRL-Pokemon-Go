@@ -8,7 +8,7 @@ from datetime import datetime
 
 def landing_page(request):
 
-    return render(request, "base_generic.html")
+    return render(request, "landing_page.html")
 
 
 def upload_photo_to_db(request):
@@ -16,7 +16,6 @@ def upload_photo_to_db(request):
     if request.method == 'POST':
         current_date_time = datetime.now()  # Get current date and time for the POST request from user
         form = User_Image_Upload_Form(request.POST, request.FILES, current_date_time)  # Supply info from POST and datetime to create new DB object
-
         if form.is_valid():
             print("Saved successfully")
             new_photo_object = form.save()  # Get a reference to the newly saved DB object that was just created and saved - add to verify queue

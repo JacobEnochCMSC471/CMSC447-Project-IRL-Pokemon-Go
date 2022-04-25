@@ -4,6 +4,7 @@ from datetime import datetime
 from django.test.client import Client
 from PIL import Image
 from io import BytesIO
+from django.urls import reverse
 
 # Testing documentation: https://django.readthedocs.io/en/1.4.X/topics/testing.html
 
@@ -34,18 +35,13 @@ class Photo_To_Database(TestCase):
         self.assertEqual(test2.user_label, 'None')
 
     def test_stat_rolling(self):  # Tests to see if stat rolling is working correctly
-        print("Testing random stat rolling for photos...\n")
-
         # --- Test default test values first --- #
         stat_headers = ['HP', 'Attack', 'Defense', 'Speed']
         test1 = Photo_Data.objects.get(user_id=1)
         test1_stats_1 = test1.get_stats()
-        print("Before stat rolling:")
-        print(stat_headers)
         print(test1.stats_to_str(), '\n')
 
         # --- Test that stat rolling works (random values) --- #
-        print("After stat rolling:")
         test1.roll_stats()
         test1_stats_2 = test1.get_stats()
         print(stat_headers)
@@ -54,7 +50,6 @@ class Photo_To_Database(TestCase):
         self.assertNotEqual(test1_stats_1, test1_stats_2)  # Are the rolled stats still default values?
 
     def test_model_instance_creation(self):
-        print("Testing that databse objects are being created correctly...\n")
         test1 = Photo_Data.objects.get(user_id=1)
         test_image = Image.open(test1.image)
         test_image.show()  # Visual test to see if the image opens correctly
@@ -63,8 +58,6 @@ class Photo_To_Database(TestCase):
         self.assertEqual(test1.user_id, 1)  # Tests that the supplied ID was stored correctly
 
     def test_posting_image(self):
-        print("Testing client-side requests and responses...\n")
-
         c = Client()
         response = c.post('/image_upload', {'user_id': ['5'], 'image': 'media/uploads/big_oof.PNG'})
         code = response.status_code
@@ -98,3 +91,25 @@ class Photo_To_Database(TestCase):
         # --- Test that the response for /image_upload uses the correct template
         response = c.get('/image_upload')
         self.assertTemplateUsed(response, 'User_Image_Upload_Form.html')
+
+    def test_directory_links(self): # This tests if the buttons that link to other pages works properly
+        c = Client()
+
+        response = c.get('/image_upload')
+        self.assertContains(response, '>Home</a></li>')  # Is the Home link rendered properly?
+        self.assertContains(response, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
+
+    def test_url_exists_at_correct_location(self):
+        c = Client()
+
+        response1 = c.get('/image_upload')
+        response2 = c.get('/success')
+        response3 = c.get('/error')
+
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response3.status_code, 200)
+
+
+
+
