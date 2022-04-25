@@ -29,9 +29,9 @@ def upload_photo_to_db(request):
 
 
 def success(request):  # Redirect page for when an image is successfully uploaded
-    return HttpResponse('Image successfully uploaded!')
+    return render(request, 'success_image_upload.html')
 
 
 def error(request):
-    return HttpResponse('Something went wrong!')
+    return render(request, 'error_image_upload.html')
 
