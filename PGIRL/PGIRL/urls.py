@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('inventory/', include('Inventory.urls')),
     path('', include('Photo_Uploader.urls')),
+    path('', include('verification.urls')),
 ]
 
 if settings.DEBUG:
