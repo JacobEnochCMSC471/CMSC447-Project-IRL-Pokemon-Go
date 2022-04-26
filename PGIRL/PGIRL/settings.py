@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Inventory.apps.InventoryConfig',
     'Photo_Uploader',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'PGIRL.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
