@@ -6,9 +6,15 @@
 </head>
 <body>
     <div class="container">
-        Is this image a {{pet_name}}
-        <img src="{{image}}">
+        Is this image a {{pet_name}}? <br/>
+        <img src="{{image}}"> <br/>
 
+        <form method = "post" >
+            {% csrf_token %}
+            <button type="submit" formaction="{% 'answer_yes' %}">Yes</button>  <button type="submit" formaction="{% 'answer_no' %}" >No</button>
+        </form>
+        <br/>
+        <a href="{% url 'Photo_Uploader:landing_pad' %}">Return Home</a>
     </div>
 
 </body>
