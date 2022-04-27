@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Photo_Data
+from Photo_Uploader.models import Photo_Data
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world. I am tired.")
-
-#get the pet and question user
-def get_pet(request):
-    petset = Photo_Data.objects.filter(verified_status=False)
+    pet = Photo_Data.objects.filter(verified_status=False)[0]
+    cont = {
+        "image":pet.image,
+        "pet_name":pet.pet_name
+    }
+    return render(request, "verification/verify_pet.html", context=cont)
 
 #create popup for user?
 
