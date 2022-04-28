@@ -7,7 +7,7 @@ from Photo_Uploader.views import remove_bad_photos
 import random
 
 pet = None #drastic measures
-THRESHOLD = 5
+THRESHOLD = 3
 
 # Create your views here.
 def verify(request):
@@ -33,7 +33,7 @@ def verify(request):
 #if they pressed yes, increase passes
 def answer_yes(request):
     global pet
-    print("___`*`*`*`*`**`*`*`**`*`*`*`**`*`*`*`*`*`**`*`*`*`_______got here lmao__________________________________________________")
+    print("_*`*`_Passes Incremented_*_*_")
     pet.increment_passes()
     if pet.get_passes() >= 3:
         pet.verified_status = True
@@ -51,11 +51,11 @@ def answer_no(request):
     #L :(
     global pet
     pet.increment_strikes()
-    print("----------^^-^----^---^Increased strikes for that image.----^-------------^^----------^---^--^^")
+    print("-Increased strikes for that image.^")
 
     #remove pet from directory and DB if strikes reached
     if pet.get_strikes() >= THRESHOLD:
-        remove_bad_photos(THRESHOLD+1)
+        remove_bad_photos(THRESHOLD)
         pet.delete()
         return redirect('verify')
 

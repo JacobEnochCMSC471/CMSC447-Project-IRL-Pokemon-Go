@@ -12,15 +12,15 @@
 
         <form method = "post" action="{% url 'answer_yes' %}">
             {% csrf_token %}
-            <button type="submit" formaction="{% url 'answer_yes' %}">Yes</button>
+            <button id="yesbtn" type="submit" formaction="{% url 'answer_yes' %}">Yes</button>
         </form>
 
         <form method = "post" action="{% url 'answer_no' %}">
             {% csrf_token %}
-            <button type="submit" formaction="{% url 'answer_no' %}">No</button>
+            <button id="nobtn" type="submit" formaction="{% url 'answer_no' %}">No</button>
         </form>
         <br/>
-        <a href="{% url 'landing_page' %}">Return Home</a>
+        <a id="home" href="{% url 'landing_page' %}">Return Home</a>
 
     </div>
 </body>
