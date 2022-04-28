@@ -6,9 +6,9 @@
 </head>
 <body>
     <div class="container">
-        Is this image a {{pet_name}}? image: {{image}} <br/>
+        Is this image a {{pet_name}}? <br/>
         <!-- See if this displays an image, or just the img jpg-->
-        <img src="{{image}}"> <img src="uploads/test_5.jpg"> <br/>
+        <img src="{{image}}" width="300" height="300"> <br/>
 
         <form method = "post" action="{% url 'answer_yes' %}">
             {% csrf_token %}

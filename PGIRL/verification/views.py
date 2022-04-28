@@ -21,13 +21,14 @@ def index(request):
         #send to evil html boohoo
         return render(request, "verification/empty_error.html")
 
+    image_name = str(pet.image)
     cont = {
-        "image":pet.image,
+        "image": "../../../media/" + image_name,
         "pet_name":pet.user_label,
     }
     return render(request, "verification/verify_pet.html", context=cont)
 
-#if they pressed , increase passes
+#if they pressed yes, increase passes
 def answer_yes(request):
     global pet
     pet.increment_passes()
