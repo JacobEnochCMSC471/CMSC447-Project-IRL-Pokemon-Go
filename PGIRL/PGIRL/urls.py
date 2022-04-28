@@ -18,11 +18,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inventory/', include('Inventory.urls')),
     path('', include('Photo_Uploader.urls')),
-    path('', include('verification.urls')),
+    path('verification/', include('verification.urls')),
 ]
 
 if settings.DEBUG:

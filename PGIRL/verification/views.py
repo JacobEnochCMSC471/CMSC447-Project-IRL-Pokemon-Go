@@ -4,13 +4,22 @@ from django.http import HttpResponseRedirect
 from Photo_Uploader.models import Photo_Data
 import random
 
-pet = NULL #drastic measures
+pet = None #drastic measures
 
 # Create your views here.
 def index(request):
-    items = list(Photo_Data.objects.filter(verified_status=False))
     global pet
-    pet = random.choice(items)
+    pet = None
+    items = list(Photo_Data.objects.filter(verified_status=False))
+
+    #only pick a random pet IF there's an image hehe
+    if len(items) != 0:
+        pet = random.choice(items)
+        #seeing what this is stored as...
+        print("pet.pet_name")
+    else:
+        #send to evil html boohoo
+        return render(request, "verification/empty_error.html")
 
     cont = {
         "image":pet.image,

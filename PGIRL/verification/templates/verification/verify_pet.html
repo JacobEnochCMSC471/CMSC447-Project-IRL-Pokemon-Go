@@ -7,15 +7,21 @@
 <body>
     <div class="container">
         Is this image a {{pet_name}}? <br/>
+        <!-- See if this displays an image, or just the img jpg-->
         <img src="{{image}}"> <br/>
 
-        <form method = "post" >
+        <form method = "post" action="{% url 'answer_yes' %}">
             {% csrf_token %}
-            <button type="submit" formaction="{% 'answer_yes' %}">Yes</button>  <button type="submit" formaction="{% 'answer_no' %}" >No</button>
+            <button type="submit">Yes</button>
+        </form>
+
+        <form method = "post" action="{% url 'answer_no' %}">
+            {% csrf_token %}
+            <button type="submit" >No</button>
         </form>
         <br/>
-        <a href="{% url 'Photo_Uploader:landing_pad' %}">Return Home</a>
-    </div>
+        <a href="{% url 'landing_page' %}">Return Home</a>
 
+    </div>
 </body>
 </html>
