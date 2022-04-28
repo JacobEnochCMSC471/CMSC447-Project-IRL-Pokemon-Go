@@ -10,6 +10,7 @@ def get_choices(file):  # Converts all lines in animals.txt file to choices for 
             modified_line = line.strip()
             choices.append((str(modified_line), str(modified_line).upper()))
 
+    animals.close()
     return tuple(choices)
 
 
@@ -21,6 +22,8 @@ def get_random_name(file):  # Pulls a random name from the names.txt file - used
         random_name_line = random.randrange(0, file_length)
         random_name = file_lines[random_name_line]
         random_name = random_name.strip('\n')
+
+    names.close()
 
     return random_name
 
@@ -39,6 +42,8 @@ class Photo_Data(models.Model):
     date_added = models.DateField(null=True)  # Date when photos were uploaded
     verified_status = models.BooleanField(default=False)  # Photos will not be verified by default
     user_label = models.CharField(max_length=25, choices=choices, default='None')  # User-supplied label for the image
+    strikes = models.IntegerField(default=0)  # Number of times this photo was voted to be incorrectly labelled
+    passes = models.IntegerField(default=0) # Number of times this photo was voted to be correctly labelled
 
     # Each photo will have stats associated with them - these will be automatically rolled when added to the database
     stat_hp = models.IntegerField(default=0)
@@ -63,6 +68,24 @@ class Photo_Data(models.Model):
 
     def get_user_id(self):  # Get the user ID that is associated with the photo
         return self.user_id
+
+    def get_strikes(self):
+        return self.strikes
+
+    def get_passes(self):
+        return self.passes
+
+    def set_strikes(self, value):
+        self.strikes = value
+
+    def set_passes(self, value):
+        self.passes = value
+
+    def increment_strikes(self):
+        self.strikes += 1
+
+    def increment_passes(self):
+        self.passes += 1
 
     # TODO: Not necessarily MVP but try to find a way to relate stats with the type of animal in photo
     # Example: A turtle would have high defense and hp, mid-range attack and low speed

@@ -4,6 +4,12 @@ from datetime import datetime
 from django.test.client import Client
 from PIL import Image
 from io import BytesIO
+from Photo_Uploader.views import remove_bad_photos
+from django.urls import reverse
+import os
+import shutil
+import glob
+
 
 # Testing documentation: https://django.readthedocs.io/en/1.4.X/topics/testing.html
 
@@ -12,10 +18,13 @@ class Photo_To_Database(TestCase):
 
     def setUp(self):
         current_time = datetime.now()
-        test_photo = 'uploads/test_image.png'
+        test_photo = 'test_uploads/test_image.png'
         Photo_Data.objects.create(user_id=1, image=test_photo, date_added=current_time, user_label="Antelope", verified_status=True,
                                   pet_name='Travis')
-        Photo_Data.objects.create(user_id=2, image='uploads/big_oof.PNG', date_added=current_time)
+        Photo_Data.objects.create(user_id=2, image='test_uploads/big_oof.PNG', date_added=current_time)
+        Photo_Data.objects.create(user_id=6, image='test_uploads/test_2.jpg', date_added=current_time, strikes=6)
+        Photo_Data.objects.create(user_id=18, image='test_uploads/test_3.jpg', date_added=current_time, strikes=5)
+        Photo_Data.objects.create(user_id=24, image='test_uploads/test_4.jpg', date_added=current_time, strikes=4)
 
     def test_photo_defaults(self):  # Tests default values for Photo_Data objects
         test1 = Photo_Data.objects.get(user_id=1)  # Has a label
@@ -34,18 +43,13 @@ class Photo_To_Database(TestCase):
         self.assertEqual(test2.user_label, 'None')
 
     def test_stat_rolling(self):  # Tests to see if stat rolling is working correctly
-        print("Testing random stat rolling for photos...\n")
-
         # --- Test default test values first --- #
         stat_headers = ['HP', 'Attack', 'Defense', 'Speed']
         test1 = Photo_Data.objects.get(user_id=1)
         test1_stats_1 = test1.get_stats()
-        print("Before stat rolling:")
-        print(stat_headers)
         print(test1.stats_to_str(), '\n')
 
         # --- Test that stat rolling works (random values) --- #
-        print("After stat rolling:")
         test1.roll_stats()
         test1_stats_2 = test1.get_stats()
         print(stat_headers)
@@ -54,47 +58,139 @@ class Photo_To_Database(TestCase):
         self.assertNotEqual(test1_stats_1, test1_stats_2)  # Are the rolled stats still default values?
 
     def test_model_instance_creation(self):
-        print("Testing that databse objects are being created correctly...\n")
         test1 = Photo_Data.objects.get(user_id=1)
         test_image = Image.open(test1.image)
         test_image.show()  # Visual test to see if the image opens correctly
 
-        self.assertEqual(test1.image, 'uploads/test_image.png')  # Tests that the image path is saved correctly
+        self.assertEqual(test1.image, 'test_uploads/test_image.png')  # Tests that the image path is saved correctly
         self.assertEqual(test1.user_id, 1)  # Tests that the supplied ID was stored correctly
 
     def test_posting_image(self):
-        print("Testing client-side requests and responses...\n")
-
         c = Client()
-        response = c.post('/image_upload', {'user_id': ['5'], 'image': 'media/uploads/big_oof.PNG'})
-        code = response.status_code
-        self.assertEqual(code, 302)  # HTTP 302 indicates a redirect (redirects to /success)
+        img = BytesIO(b'test_image')
+        img.name = 'media/test_uploads/test_5.jpg'
 
-        response = c.get('/success')
+        with open(img.name, 'rb') as fp:
+            response = c.post('/image_upload/', {'user_id': '123', 'pet_name': 'Theresa', 'user_label': 'Aardvark', 'image': fp})
+
+        fp.close()
+
         code = response.status_code
-        self.assertEqual(code, 200)  # HTTP 200 indicates that the page was sent successfully
+        self.assertEqual(code, 302)  # HTTP 302 indicates a redirect (should redirect to /success)
+        self.assertRedirects(response, '/image_upload/success')
 
     def test_site_functionality(self):
         test = Photo_Data.objects.get(user_id=1)
-        c = Client(enforce_csrf_checks=False)
+        c = Client()
+        img = BytesIO(b'test_image')
+        img.name = 'media/' + str(test.image)
 
+        '''
         # I have no idea why this test is failing, my POST matches exactly with posts pulled straight from the site minus a CSRF token
         # It keeps redirecting to /error instead of /success despite being provided the correct things it needs, very confused
         # Example POST pulled from user-generated example by using the site:
         # <QueryDict: {'csrfmiddlewaretoken': ['f7GLFEcLzN3AvKp1jrakIRdwJhn0PAoLZhYBD9WsPXQr8sqNiFEbkRXjYwgwHBsO'], 'user_id': ['123'], 'pet_name': ['Theresa'], 'user_label': ['Aardvark']}>
         # The page is redirected correctly when the page is used by actual people
         # Unsure about how to tackle this thus far after 1.5 hours of hair pulling
-        img = BytesIO(b'image')
-        img.name = 'media/uploads/test_image.png'
-        client_params = {'user_id': ['123'], 'pet_name': ['Theresa'], 'image': img, 'user_label': ['Aardvark']}
-
-        correct_post_response = c.post('/image_upload', client_params)
-        incorrect_post_response = c.post('/image_upload', {'user_id': 5, 'image': 'uploads/big_oof.PNG', 'user_label': 'Whale'})
-
-        self.assertRedirects(correct_post_response, '/success')  # Test that successful POST redirects to /success
-        self.assertRedirects(incorrect_post_response, '/error')  # Test that a failed POST redirects to /error
         # --- End Rant --- #
+        
+        4/25 - finally fixed!!!! :))))
+        '''
+
+        with open(img.name, 'rb') as fp:
+            correct_post_response = c.post('/image_upload/', {'user_id': '123', 'pet_name': 'Theresa', 'user_label': 'Aardvark', 'image': fp})
+            incorrect_post_response = c.post('/image_upload/', {'user_id': 5, 'image': fp, 'user_label': 'Whale'})
+
+        fp.close()
+
+        self.assertRedirects(correct_post_response, '/image_upload/success')  # Test that successful POST redirects to /success
+        self.assertRedirects(incorrect_post_response, '/image_upload/error')  # Test that a failed POST redirects to /error
 
         # --- Test that the response for /image_upload uses the correct template
-        response = c.get('/image_upload')
+        response = c.get('/image_upload/')
         self.assertTemplateUsed(response, 'User_Image_Upload_Form.html')
+
+    def test_directory_links(self):  # This tests if the buttons that link to other pages works properly
+        c = Client()
+
+        response1 = c.get('/image_upload/')
+        response2 = c.get('/image_upload/success')
+        response3 = c.get('/image_upload/error')
+
+        # Test base image upload page
+        self.assertContains(response1, '>Home</a></li>')  # Is the Home link rendered properly?
+        self.assertContains(response1, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
+
+        # Test image upload success page
+        self.assertContains(response2, '>Home</a></li>')  # Is the Home link rendered properly?
+        self.assertContains(response2, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
+        self.assertContains(response2, '>Upload a Photo</a></li>')  # Is the photo upload link rendered properly?
+
+        # Test image upload error page
+        self.assertContains(response3, '>Home</a></li>')  # Is the Home link rendered properly?
+        self.assertContains(response3, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
+        self.assertContains(response3, '>Upload a Photo</a></li>')  # Is the upload link rendered properly?
+
+    def test_url_exists_at_correct_location(self):
+        c = Client()
+
+        response1 = c.get('/image_upload/')
+        response2 = c.get('/image_upload/success')
+        response3 = c.get('/image_upload/error')
+
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response3.status_code, 200)
+
+    def test_photo_removal(self):  # Tests that photos with strikes past a certain threshold are removed from the DB and uploads directory
+        photo_removal_threshold = 5  # If a photo object gets at least this many strikes remove it
+        current_time = datetime.now()
+
+        test_2_photo = 'media/' + str(Photo_Data.objects.get(user_id=6).image)
+        test_3_photo = 'media/' + str(Photo_Data.objects.get(user_id=18).image)
+
+        current_db = Photo_Data.objects.all()
+
+        total_items = 0
+
+        for photo in current_db.iterator():
+            print(photo)
+            total_items += 1
+
+        self.assertEqual(total_items, 5)  # 4 items in DB before any deletes occur
+
+        remove_bad_photos(photo_removal_threshold)
+
+        current_db = Photo_Data.objects.all()
+
+        total_items = 0
+
+        for photo in current_db.iterator():
+            print(photo)
+            total_items += 1
+
+        self.assertEqual(total_items, 3)  # 3 items in DB after deletes
+
+        photo_exist_test2 = True
+        photo_exist_test3 = True
+
+        if not os.path.exists(test_2_photo):
+            photo_exist_test2 = False
+
+        if not os.path.exists(test_3_photo):
+            photo_exist_test3 = False
+
+        self.assertEqual(photo_exist_test2, False)
+        self.assertEqual(photo_exist_test3, False)
+
+    def tearDown(self):
+        files_to_keep = ['media/uploads/big_oof.PNG', 'media/uploads/test_2.jpg', 'media/uploads/test_3.png', 'media/uploads/test_4.jpg', 'media/uploads/test_5.jpg' 'media/uploads/test_image.png']
+        test_upload_files = ['test_2.jpg', 'test_3.jpg']
+        uploads_path = 'media/uploads/'
+        test_path = 'media/test_uploads/'
+
+
+
+
+
+
