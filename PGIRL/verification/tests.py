@@ -2,22 +2,38 @@ from django.test import TestCase
 from Photo_Uploader.models import Photo_Data
 from datetime import datetime
 from django.test.client import Client
+from django.urls import reverse
 from PIL import Image
 from io import BytesIO
 
 # Create your tests here.
-class Verify_Pets(self):
-    def start(self):
+class VerifyTest(self):
+    #test if the site is up
+    def test_here(self):
+        response = self.client.get(reverse('verify'))
+        self.assertEqual(response.status_code, 200)
         pass
 
-    def vote(self):
+    #set up 2 pets (one to pass one to fail)
+    def test_start(self):
         pass
 
-    def check_strikes(self):
+    #Am I sent to the error screen if nothing's in the DB?
+    def test_empty_db(self):
         pass
 
-    def check_passes(self):
+    #Do the page/images load?
+    def test_vote(self):
         pass
 
-    def check_exit(self):
-        self
+    #Do the strikes increase?
+    def test_check_strikes(self):
+        pass
+
+    #Do the passes increase?
+    def test_check_passes(self):
+        pass
+
+    #Am I returned to the home page?
+    def test_check_exit(self):
+        pass
