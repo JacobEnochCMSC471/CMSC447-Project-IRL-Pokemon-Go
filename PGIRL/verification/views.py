@@ -23,11 +23,11 @@ def index(request):
 
     cont = {
         "image":pet.image,
-        "pet_name":pet.pet_name
+        "pet_name":pet.user_label,
     }
     return render(request, "verification/verify_pet.html", context=cont)
 
-#if they pressed yes
+#if they pressed , increase passes
 def answer_yes(request):
     global pet
     pet.increment_passes()
@@ -37,15 +37,16 @@ def answer_yes(request):
         print("Increased health for that pet.")
         pass
 
+    pet.save()
     print("Increased passes for that image.")
     return HttpResponseRedirect(reverse('index'))
 
-#if they pressed no
+#if they pressed no, increase strikes
 def answer_no(request):
     #L :(
     global pet
     pet.increment_strikes()
     print("Increased strikes for that image.")
-    return HttpResponseRedirect(reverse('index'))
 
-#Depending on what the user presses, increment strikes or passes
+    pet.save()
+    return HttpResponseRedirect(reverse('index'))
