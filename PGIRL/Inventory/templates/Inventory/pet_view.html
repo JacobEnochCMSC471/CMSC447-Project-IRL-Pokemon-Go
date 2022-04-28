@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ pet.pet_name }}</title>
+    </head>
+    <body>
+        <div>{{ pet.pet_name }}</div>
+        <span><img src="../../../../media/{{ pet.image }}"></span>
+        <span>Verified: {{ pet.verified_status }}</span>
+        <div>Type: {{ pet.user_label }}</div>
+        <div></div>
+
+        <div>Stats:</div>
+        <div>HP: {{ pet.stat_hp }}</div>
+        <div>Attack: {{ pet.stat_attack }}</div>
+        <div>Defense: {{ pet.stat_defense }}</div>
+        <div>Speed: {{ pet.stat_speed }}</div>
+    </body>
+</html>

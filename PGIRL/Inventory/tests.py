@@ -35,17 +35,10 @@ class InventoryTester(TestCase):
 
         c = Client()
         response = c.get('/inventory/items/')
-        raw_html = response.content
-        test1 = False
-        test2 = False
-        # encode strings as bytestrings to match against the raw html
-        if (item1.name).encode() in raw_html and (item1.description).encode() in raw_html:
-            test1 = True
-        if (item2.name).encode() in raw_html and (item2.description).encode() in raw_html:
-             test2 = True
-            
-        self.assertEqual(test1, True)
-        self.assertEqual(test2, True)
+        self.assertContains(response, item1.name)
+        self.assertContains(response, item1.description)
+        self.assertContains(response, item2.name)
+        self.assertContains(response, item2.description)
 
     
     # Test that pets get displayed in the pet list
@@ -55,14 +48,25 @@ class InventoryTester(TestCase):
 
         c = Client()
         response = c.get('/inventory/pets/')
-        raw_html = response.content
-        test1 = False
-        test2 = False
-        # encode strings as bytestrings to match against the raw html
-        if (pet1.pet_name).encode() in raw_html:
-            test1 = True
-        if (pet2.pet_name).encode() in raw_html:
-                test2 = True
-            
-        self.assertEqual(test1, True)
-        self.assertEqual(test2, True)
+        self.assertContains(response, pet1.pet_name)
+        self.assertContains(response, pet2.pet_name)
+    
+    def test_non_existent_pet_page(self):
+        c = Client()
+        response = c.get('/inventory/pets/3/Jules/')
+        code = response.status_code
+        self.assertEqual(code, 404)
+    
+    def test_pet_page(self):
+        pet = Photo_Data.objects.create(user_id=1, image='uploads/crunker.png', date_added=datetime.now(), user_label="Cat", verified_status=True, pet_name="Crunker")
+
+        c = Client()
+        response = c.get('/inventory/pets/' + str(pet.user_id) + '/' + pet.pet_name + '/')
+        code = response.status_code
+        self.assertEqual(code, 200)
+        self.assertContains(response, pet.pet_name)
+        self.assertContains(response, pet.user_label)
+        self.assertContains(response, "HP: " + str(pet.stat_hp))
+        self.assertContains(response, "Attack: " + str(pet.stat_attack))
+        self.assertContains(response, "Defense: " + str(pet.stat_defense))
+        self.assertContains(response, "Speed: " + str(pet.stat_speed))
