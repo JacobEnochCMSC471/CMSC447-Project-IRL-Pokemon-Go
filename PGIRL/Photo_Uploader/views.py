@@ -22,8 +22,6 @@ def remove_bad_photos(threshold):
 
         bad_photos.delete()  # Delete all Photo_Data entries that go past the threshold
 
-        print(photo_list)
-
         for photo_path in photo_list:
             if os.path.exists(photo_path):  # Remove the photo from the media/uploads directory
                 print("Removing photo from directory...")

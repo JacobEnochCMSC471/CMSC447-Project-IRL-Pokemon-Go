@@ -60,10 +60,11 @@ class Photo_To_Database(TestCase):
     def test_model_instance_creation(self):
         test1 = Photo_Data.objects.get(user_id=1)
         test_image = Image.open(test1.image)
-        test_image.show()  # Visual test to see if the image opens correctly
+        # test_image.show()  # Visual test to see if the image opens correctly
 
         self.assertEqual(test1.image, 'test_uploads/test_image.png')  # Tests that the image path is saved correctly
         self.assertEqual(test1.user_id, 1)  # Tests that the supplied ID was stored correctly
+        test_image.close()  # Close the image after being used
 
     def test_posting_image(self):
         c = Client()
@@ -72,6 +73,11 @@ class Photo_To_Database(TestCase):
 
         with open(img.name, 'rb') as fp:
             response = c.post('/image_upload/', {'user_id': '123', 'pet_name': 'Theresa', 'user_label': 'Aardvark', 'image': fp})
+
+        file_name = os.path.split(img.name)  # splits filepath into head/tail - tail = actual file
+
+        if os.path.exists('media/uploads/' + file_name[1]):  # Delete trash image after it's posted
+            os.remove('media/uploads/' + file_name[1])
 
         fp.close()
 
@@ -101,7 +107,12 @@ class Photo_To_Database(TestCase):
             correct_post_response = c.post('/image_upload/', {'user_id': '123', 'pet_name': 'Theresa', 'user_label': 'Aardvark', 'image': fp})
             incorrect_post_response = c.post('/image_upload/', {'user_id': 5, 'image': fp, 'user_label': 'Whale'})
 
-        fp.close()
+        file_name = os.path.split(img.name)  # splits filepath into head/tail - tail = actual file
+
+        if os.path.exists('media/uploads/' + file_name[1]):  # Delete trash image after it's posted
+            os.remove('media/uploads/' + file_name[1])
+
+        fp.close()  # Close the filepath
 
         self.assertRedirects(correct_post_response, '/image_upload/success')  # Test that successful POST redirects to /success
         self.assertRedirects(incorrect_post_response, '/image_upload/error')  # Test that a failed POST redirects to /error
@@ -154,7 +165,6 @@ class Photo_To_Database(TestCase):
         total_items = 0
 
         for photo in current_db.iterator():
-            print(photo)
             total_items += 1
 
         self.assertEqual(total_items, 5)  # 4 items in DB before any deletes occur
@@ -184,10 +194,11 @@ class Photo_To_Database(TestCase):
         self.assertEqual(photo_exist_test3, False)
 
     def tearDown(self):
-        files_to_keep = ['media/uploads/big_oof.PNG', 'media/uploads/test_2.jpg', 'media/uploads/test_3.png', 'media/uploads/test_4.jpg', 'media/uploads/test_5.jpg' 'media/uploads/test_image.png']
-        test_upload_files = ['test_2.jpg', 'test_3.jpg']
-        uploads_path = 'media/uploads/'
-        test_path = 'media/test_uploads/'
+        backup_path = 'media/test_uploads_copy'
+        test_path = 'media/test_uploads'
+        shutil.rmtree(test_path)  # Delete the test image directory
+        shutil.copytree(backup_path, test_path)  # Copy files from test backup to new test directory so files stay after test
+
 
 
 
