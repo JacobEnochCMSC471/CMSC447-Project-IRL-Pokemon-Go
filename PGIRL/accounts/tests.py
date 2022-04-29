@@ -17,4 +17,16 @@ class ProfileModelTests(TestCase):
     def test_user_creation(self):
         testUser=profile.objects.create(user='katy', username='katy', image='profile_pics/R.jpg', level=0, experience=0)
         userTest=profile.objects.get(user='katy')
+        
         self.assertEqual(testUser, userTest)
+
+    def test_url_exists_at_correct_location(self):
+        c=Client()
+
+        response1=c.get('accounts/register')
+        response2=c.get('accounts/edit')
+        response3=c.get('accounts/profile')
+
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response3.status_code, 200)
