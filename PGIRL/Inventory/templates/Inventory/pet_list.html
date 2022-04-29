@@ -7,7 +7,12 @@
     <body>
         {% if pet_list %}
             {% for pet in pet_list %}
-                <div>{{ pet.image }} {{ pet.pet_name }}</div>
+                <div>
+                    {% block content %}
+                        <img src="../../media/{{ pet.image }}">
+                    {% endblock %}
+                    <a href="{% url 'inventory:pet_view' pet.user_id pet.pet_name %}">{{ pet.pet_name }}</a>
+                </div>
             {% endfor %}
         {% else %}
 
