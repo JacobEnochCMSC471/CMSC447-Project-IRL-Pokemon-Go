@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Pet List</title>
+    </head>
+    <body>
+        {% if pet_list %}
+            {% for pet in pet_list %}
+                <div>
+                    {% block content %}
+                        <img src="../../media/{{ pet.image }}">
+                    {% endblock %}
+                    <a href="{% url 'inventory:pet_view' pet.user_id pet.pet_name %}">{{ pet.pet_name }}</a>
+                </div>
+            {% endfor %}
+        {% else %}
+
+            <p>No pets?</p>
+        {% endif %}
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    {% block sidebar %}
+                    <ul class="sidebar-nav">
+                        <li><a href="{% url 'landing_page' %}">Home</a></li>
+                        <li><a href="{% url 'select_list' %}">View Inventory</a></li>
+                        <li><a href="{% url 'image_upload' %}">Upload a Photo</a></li>
+                    </ul>
+                    {% endblock %}
+                </div>
+                <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
+            </div>
+        </div>
+    </body>
+</html>

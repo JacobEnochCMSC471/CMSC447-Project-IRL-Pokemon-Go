@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokemon Go IRL Image Upload</title>
+    {% block title %}<title>Pokemon Go IRL</title>{% endblock %}
+</head>
+<form method = "post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                {% block sidebar %}
+                <ul class="sidebar-nav">
+                    <li><a href="{% url 'landing_page' %}">Home</a></li>
+                    <li><a href="{% url 'select_list' %}">View Inventory</a></li>
+                </ul>
+                {% endblock %}
+            </div>
+            <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
+        </div>
+    </div>
+</html>
