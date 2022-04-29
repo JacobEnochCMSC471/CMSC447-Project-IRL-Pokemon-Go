@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'Inventory',
     'Photo_Uploader',
     'Map',
+    'verification',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
