@@ -2,14 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from django.db.models.signals import post_save
-
+from Inventory.models import Item
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     username=models.CharField(max_length=30,blank=True)
     profile_picture=models.ImageField(default='default.jpg', upload_to='profile_pics')
- #   selected_pet=models.(blank=True)
+    #selected_pet=models.user_id.Inventory(blank=True)
     level=models.IntegerField(default=0)
-  #  inventory=models.
+    inventory=Item.user_id
     experience=models.IntegerField(default=0)
     
     def __str__(self):
@@ -24,8 +24,8 @@ class Profile(models.Model):
 
     post_save.connect(create_profile, sender=User)
 
-    def get_user(self):
-      return self.user
+    def get_user_id(self):
+      return self.user_id
 
     def get_username(self):
       return self.username
@@ -38,3 +38,4 @@ class Profile(models.Model):
     
     def get_experience(self):
       return self.experience
+      

@@ -19,7 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-bga%fd=r@g74ilr^mxo5ln(0gkcrp%9h_@&a=+@+9u773%4i64'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

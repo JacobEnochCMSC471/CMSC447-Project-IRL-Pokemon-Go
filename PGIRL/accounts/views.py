@@ -37,9 +37,9 @@ def edit_profile(request):
 
 def view_profile(request, pk=None):
     if pk:
-        user = User.objects.get(pk=pk)
+        user_id = User.objects.get(pk=pk)
     else:
-        user = request.user
-    args = {'user': user}
+        user_id = request.user_id
+    args = {'user_id': user_id}
     return render(request, 'profile.html', args)
 
