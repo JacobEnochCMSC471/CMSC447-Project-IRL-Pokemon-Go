@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils import unittest
 from prometheus_client import instance_ip_grouping_key
 from django.test.client import Client
 from datetime import datetime
