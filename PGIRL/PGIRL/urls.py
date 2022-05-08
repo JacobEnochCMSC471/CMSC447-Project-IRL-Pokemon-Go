@@ -23,6 +23,8 @@ urlpatterns = [
     path('inventory/', include('Inventory.urls')),
     path('accounts/', include('accounts.urls')),
     path('', include('Photo_Uploader.urls')),
+    path('map/', include('Map.urls')),
+    path('verification/', include('verification.urls'))
 ]
 
 if settings.DEBUG:
