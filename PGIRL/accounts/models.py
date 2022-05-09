@@ -4,8 +4,7 @@ from PIL import Image
 from django.db.models.signals import post_save
 from Inventory.models import Item
 class Profile(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    username=models.CharField(max_length=30,blank=True)
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture=models.ImageField(default='default.jpg', upload_to='profile_pics')
     #selected_pet=models.user_id.Inventory(blank=True)
     level=models.IntegerField(default=0)
@@ -15,8 +14,8 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
 
     def create_profile(sender, **kwargs):
       if kwargs['created']:
@@ -24,11 +23,8 @@ class Profile(models.Model):
 
     post_save.connect(create_profile, sender=User)
 
-    def get_user_id(self):
-      return self.user_id
-
-    def get_username(self):
-      return self.username
+    def get_user(self):
+      return self.user
     
     def get_profilePicture(self):
       return self.profile_picture
