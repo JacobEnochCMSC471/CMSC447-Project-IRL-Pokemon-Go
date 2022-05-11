@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-    {% load static %}
+{% extends 'base/base.html' %}
+
+{% block stuff %}
+{% load static %}
     <head>
         <meta charset="utf-8">
         <title>Map</title>
@@ -18,8 +21,10 @@
         </style>
     </head>
     <body>
+
         <div class="imgbox">
             <img src="{% static 'Map/images/map.png' %}">
         </div>
+    {% endblock %}
     </body>
 </html>

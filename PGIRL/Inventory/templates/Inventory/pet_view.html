@@ -5,6 +5,7 @@
         <title>{{ pet.pet_name }}</title>
     </head>
     <body>
+    {% block stuff %}
         <div>{{ pet.pet_name }}</div>
         <span><img src="../../../../media/{{ pet.image }}"></span>
         <span>Verified: {{ pet.verified_status }}</span>
@@ -16,5 +17,6 @@
         <div>Attack: {{ pet.stat_attack }}</div>
         <div>Defense: {{ pet.stat_defense }}</div>
         <div>Speed: {{ pet.stat_speed }}</div>
+    {% endblock %}
     </body>
 </html>

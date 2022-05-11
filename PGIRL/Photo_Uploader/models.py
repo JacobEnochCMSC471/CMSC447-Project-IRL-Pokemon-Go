@@ -36,7 +36,7 @@ class Photo_Data(models.Model):
     random_name = get_random_name(names_txt)
 
     # Unique user ID assigned to users when they create an account
-    user_id = models.IntegerField(primary_key=True, unique=True)
+    user_id = models.CharField(primary_key=True, max_length=150)  # Use the unique username rather than a numerical ID; max length = 30 chars
     pet_name = models.CharField(max_length=25, default=random_name, blank=True)  # Allows people to name the photos they upload
     image = models.ImageField(upload_to='uploads/')  # Directory where photos are uploaded to
     date_added = models.DateField(null=True)  # Date when photos were uploaded

@@ -19,16 +19,16 @@ class Photo_To_Database(TestCase):
     def setUp(self):
         current_time = datetime.now()
         test_photo = 'test_uploads/test_image.png'
-        Photo_Data.objects.create(user_id=1, image=test_photo, date_added=current_time, user_label="Antelope", verified_status=True,
-                                  pet_name='Travis')
-        Photo_Data.objects.create(user_id=2, image='test_uploads/big_oof.PNG', date_added=current_time)
-        Photo_Data.objects.create(user_id=6, image='test_uploads/test_2.jpg', date_added=current_time, strikes=6)
-        Photo_Data.objects.create(user_id=18, image='test_uploads/test_3.jpg', date_added=current_time, strikes=5)
-        Photo_Data.objects.create(user_id=24, image='test_uploads/test_4.jpg', date_added=current_time, strikes=4)
+        Photo_Data.objects.create(user_id='mourgraine', image=test_photo, date_added=current_time, user_label="Antelope", verified_status=True,
+                                  pet_name='Travis')  # old id = 1
+        Photo_Data.objects.create(user_id='eatdust12', image='test_uploads/big_oof.PNG', date_added=current_time)  # old id = 2
+        Photo_Data.objects.create(user_id='XxAnimexX', image='test_uploads/test_2.jpg', date_added=current_time, strikes=6)  # old id = 6
+        Photo_Data.objects.create(user_id='urMomLOL', image='test_uploads/test_3.jpg', date_added=current_time, strikes=4)  # old id = 12
+        Photo_Data.objects.create(user_id='AshIsDead', image='test_uploads/test_4.jpg', date_added=current_time, strikes=5)  # old id = 18
 
     def test_photo_defaults(self):  # Tests default values for Photo_Data objects
-        test1 = Photo_Data.objects.get(user_id=1)  # Has a label
-        test2 = Photo_Data.objects.get(user_id=2)  # Has no label
+        test1 = Photo_Data.objects.get(user_id='mourgraine')  # Has a label
+        test2 = Photo_Data.objects.get(user_id='eatdust12')  # Has no label
         self.assertEqual(test1.stats_to_str(), ['0', '0', '0', '0'])  # Should instantiate as all 0's
 
         # --- Test User 1 (no default values except stats) --- #
@@ -45,7 +45,7 @@ class Photo_To_Database(TestCase):
     def test_stat_rolling(self):  # Tests to see if stat rolling is working correctly
         # --- Test default test values first --- #
         stat_headers = ['HP', 'Attack', 'Defense', 'Speed']
-        test1 = Photo_Data.objects.get(user_id=1)
+        test1 = Photo_Data.objects.get(user_id='mourgraine')
         test1_stats_1 = test1.get_stats()
         print(test1.stats_to_str(), '\n')
 
@@ -58,12 +58,12 @@ class Photo_To_Database(TestCase):
         self.assertNotEqual(test1_stats_1, test1_stats_2)  # Are the rolled stats still default values?
 
     def test_model_instance_creation(self):
-        test1 = Photo_Data.objects.get(user_id=1)
+        test1 = Photo_Data.objects.get(user_id='mourgraine')
         test_image = Image.open(test1.image)
         # test_image.show()  # Visual test to see if the image opens correctly
 
         self.assertEqual(test1.image, 'test_uploads/test_image.png')  # Tests that the image path is saved correctly
-        self.assertEqual(test1.user_id, 1)  # Tests that the supplied ID was stored correctly
+        self.assertEqual(test1.user_id, 'mourgraine')  # Tests that the supplied ID was stored correctly
         test_image.close()  # Close the image after being used
 
     def test_posting_image(self):
@@ -86,7 +86,7 @@ class Photo_To_Database(TestCase):
         self.assertRedirects(response, '/image_upload/success')
 
     def test_site_functionality(self):
-        test = Photo_Data.objects.get(user_id=1)
+        test = Photo_Data.objects.get(user_id='mourgraine')
         c = Client()
         img = BytesIO(b'test_image')
         img.name = 'media/' + str(test.image)
@@ -121,27 +121,6 @@ class Photo_To_Database(TestCase):
         response = c.get('/image_upload/')
         self.assertTemplateUsed(response, 'User_Image_Upload_Form.html')
 
-    def test_directory_links(self):  # This tests if the buttons that link to other pages works properly
-        c = Client()
-
-        response1 = c.get('/image_upload/')
-        response2 = c.get('/image_upload/success')
-        response3 = c.get('/image_upload/error')
-
-        # Test base image upload page
-        self.assertContains(response1, '>Home</a></li>')  # Is the Home link rendered properly?
-        self.assertContains(response1, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
-
-        # Test image upload success page
-        self.assertContains(response2, '>Home</a></li>')  # Is the Home link rendered properly?
-        self.assertContains(response2, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
-        self.assertContains(response2, '>Upload a Photo</a></li>')  # Is the photo upload link rendered properly?
-
-        # Test image upload error page
-        self.assertContains(response3, '>Home</a></li>')  # Is the Home link rendered properly?
-        self.assertContains(response3, '>View Inventory</a></li>')  # Is the inventory link rendered properly?
-        self.assertContains(response3, '>Upload a Photo</a></li>')  # Is the upload link rendered properly?
-
     def test_url_exists_at_correct_location(self):
         c = Client()
 
@@ -157,8 +136,8 @@ class Photo_To_Database(TestCase):
         photo_removal_threshold = 5  # If a photo object gets at least this many strikes remove it
         current_time = datetime.now()
 
-        test_2_photo = 'media/' + str(Photo_Data.objects.get(user_id=6).image)
-        test_3_photo = 'media/' + str(Photo_Data.objects.get(user_id=18).image)
+        test_2_photo = 'media/' + str(Photo_Data.objects.get(user_id='XxAnimexX').image)
+        test_3_photo = 'media/' + str(Photo_Data.objects.get(user_id='AshIsDead').image)
 
         current_db = Photo_Data.objects.all()
 
@@ -198,10 +177,3 @@ class Photo_To_Database(TestCase):
         test_path = 'media/test_uploads'
         shutil.rmtree(test_path)  # Delete the test image directory
         shutil.copytree(backup_path, test_path)  # Copy files from test backup to new test directory so files stay after test
-
-
-
-
-
-
-
