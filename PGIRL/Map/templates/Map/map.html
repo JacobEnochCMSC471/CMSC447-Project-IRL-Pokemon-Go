@@ -5,6 +5,10 @@
         <meta charset="utf-8">
         <title>Map</title>
         <style>
+            body{
+                background: rgb(76,177,220);
+            }
+
             img {
                 max-width: 100%;
                 max-height: 100vh;
@@ -15,11 +19,80 @@
                 display: grid;
                 height: 100%;
             }
+
+            .btn {
+              background-color: floralwhite;
+              border: 3px solid #593e19;
+                border-radius: 7px;
+
+              color: #47341b;
+              padding: 5px 10px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 20px;
+              font-family: fantasy;
+              margin: 4px 2px;
+              cursor: pointer;
+            }
+            .btn:hover {background-color: #d9d0c5}
+  .btn:active {
+  background-color: #d9d0c5;
+}
+
+            .btn-1{
+              position: absolute;
+              left: 33%;
+              top: 42%;
+            }
+
+            .btn-2{
+              position: absolute;
+              left: 57%;
+              top: 39%;
+            }
+
+            .btn-2{
+              position: absolute;
+              left: 57%;
+              top: 39%;
+            }
+
+            .btn-3{
+              position: absolute;
+              left: 59%;
+              top: 77%;
+            }
+
+            .btn-4{
+              position: absolute;
+              left: 32%;
+              top: 77%;
+            }
+
         </style>
     </head>
     <body>
         <div class="imgbox">
-            <img src="{% static 'Map/images/map.png' %}">
+            <img src= "../../../media/HTML_Images/explore.png">
         </div>
+
+        <form method = "post" action="{% url 'shop' %}">
+            {% csrf_token %}
+            <button class="btn btn-1" type="submit">Shop</button>
+        </form>
+
+        <form method = "post" action="{% url 'training' %}">
+            {% csrf_token %}
+            <button class="btn btn-2" type="submit">Training Grounds</button>
+        </form>
+
+        <form method = "post" action="{% url 'challenges' %}">
+            {% csrf_token %}
+            <button class="btn btn-3" type="submit">Challenges</button>
+        </form>
+
+        <button class="btn btn-4" type="submit">Home</button>
+
     </body>
 </html>
