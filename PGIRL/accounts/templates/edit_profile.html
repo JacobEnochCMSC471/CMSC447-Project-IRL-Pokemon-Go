@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'base/base.html' %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Edit Profile</title>
+    </head>
+    <body>
+    {% block stuff %}
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        <br>
+    </div>
+
+    {% endblock %}
+    </body>
+</html>
