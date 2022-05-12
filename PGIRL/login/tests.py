@@ -25,7 +25,7 @@ class LoginTests(TestCase):
 
         self.assertEqual(test1, True)  # Did the user login successfully?
 
-    def test_hidden_login_stuff_logged_in(self):
+    def test_hidden_login_stuff_logged_in(self):  # Tests that the correct Navbar items are hidden when a user is logged in
         try:
             test_user = User.objects.get(username='Big_Jeff')
             if test_user:
@@ -55,7 +55,7 @@ class LoginTests(TestCase):
 
         test2 = c.logout()
 
-    def test_hidden_login_stuff_logged_out(self):
+    def test_hidden_login_stuff_logged_out(self):  # Tests that the correct Navbar items are hidden when a user is logged out
         try:
             test_user = User.objects.get(username='Big_Jeff')
             if test_user:
@@ -67,9 +67,6 @@ class LoginTests(TestCase):
         self.assertEqual(passed, True)
 
         c = Client()
-        response = c.get('')
-        # Test for correct responses from a logged out user now
-
         response2 = c.get('')
 
         self.assertNotContains(response2, 'Inventory')
