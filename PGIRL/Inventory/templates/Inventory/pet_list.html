@@ -9,13 +9,15 @@
 {% block stuff %}
     {% if pet_list %}
         {% for pet in pet_list %}
+            {% if pet %}
             <div>
                 {% block content %}
                     <img src="../../media/{{ pet.image }}">
                 {% endblock %}
                 <a href="{% url 'pet_view' pet.user_id pet.pet_name %}">{{ pet.pet_name }}</a>
             </div>
-            {% endfor %}
+            {% endif %}
+        {% endfor %}
     {% else %}
 
 <p>No pets?</p>
