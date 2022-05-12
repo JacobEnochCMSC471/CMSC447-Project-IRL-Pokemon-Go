@@ -80,7 +80,6 @@ class LoginTests(TestCase):
         self.assertContains(response2, 'Make an account')  # Users who are logged in should not be prompted to register
         self.assertContains(response2, 'Login')  # Users who are logged in already should not be prompted to log in
 
-
     def test_correct_locations(self):
         c = Client()
         response1 = c.get('/login/login/')
@@ -92,4 +91,3 @@ class LoginTests(TestCase):
         response3 = c.get('/login/logout/')
         self.assertEqual(response3.status_code, 302)  # Redirects somewhere
         self.assertRedirects(response3, '/')  # Does it redirect to the correct place?
-
