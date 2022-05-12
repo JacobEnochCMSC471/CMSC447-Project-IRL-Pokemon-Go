@@ -17,7 +17,7 @@ def register(request):
             form.save()
             messages.success(
                 request, f'Your account has been created! You are now able to log in')
-            return redirect('login')
+            return redirect('map')
     else:
         form = RegistrationForm()
 
