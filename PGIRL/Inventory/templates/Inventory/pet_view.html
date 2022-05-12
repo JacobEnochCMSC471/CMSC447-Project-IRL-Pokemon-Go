@@ -5,17 +5,26 @@
         <title>{{ pet.pet_name }}</title>
     </head>
     <body>
-        <div>{{ pet.pet_name }}</div>
-        <span><img src="../../../../media/{{ pet.image }}"></span>
-        <span>Verified: {{ pet.verified_status }}</span>
-        <div>Type: {{ pet.user_label }}</div>
+        <div><h1 style="font-size:40px"> {{ pet.pet_name }}</h1></div>
+        <span><img src="../../../../media/{{ pet.image }}" alt="Pet Image Here" class="center"></span>
+        <span><br></span>
+        <div><p style="font-size:25px"> Verified: {{ pet.verified_status }}</p></div>
+        <div><p style="font-size:25px"> Type: {{ pet.user_label }}</p></div>
+        <div></div>
         <div></div>
 
-        <div>Stats:</div>
-        <div>HP: {{ pet.stat_hp }}</div>
-        <div>Attack: {{ pet.stat_attack }}</div>
-        <div>Defense: {{ pet.stat_defense }}</div>
-        <div>Speed: {{ pet.stat_speed }}</div>
-    <a href="{% url 'map' %}">Map</a>
+        <div><p style="font-size:30px"> Stats:</p></div>
+        <div><p style="font-size:20px"> HP: {{ pet.stat_hp }}</p></div>
+        <div><p style="font-size:20px"> Attack: {{ pet.stat_attack }}</p></div>
+        <div><p style="font-size:20px"> Defense: {{ pet.stat_defense }}</p></div>
+        <div><p style="font-size:20px"> Speed: {{ pet.stat_speed }}</p></div>
+        <form action="{% url 'select_list' %}">
+            <input type="submit" value="Return to Inventory List" />
+        </form>
+        <br>
+
+        <form action="{% url 'map' %}">
+            <input type="submit" value="Return to Map" />
+        </form>
     </body>
 </html>
