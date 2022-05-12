@@ -57,15 +57,16 @@ class InventoryTester(TestCase):
         response = c.get('/inventory/pets/')
         self.assertContains(response, pet1.pet_name)
         self.assertContains(response, pet2.pet_name)
-    
+
     def test_non_existent_pet_page(self):
         c = Client()
         response = c.get('/inventory/pets/3/Jules/')
         code = response.status_code
         self.assertEqual(code, 404)
-    
+
     def test_pet_page(self):
-        pet = Photo_Data.objects.create(user_id=1, image='uploads/crunker.png', date_added=datetime.now(), user_label="Cat", verified_status=True, pet_name="Crunker")
+        pet = Photo_Data.objects.create(user_id=1, image='uploads/crunker.png', date_added=datetime.now(), user_label="Cat", verified_status=True,
+                                        pet_name="Crunker")
 
         c = Client()
         response = c.get('/inventory/pets/' + str(pet.user_id) + '/' + pet.pet_name + '/')
@@ -77,31 +78,6 @@ class InventoryTester(TestCase):
         self.assertContains(response, "Attack: " + str(pet.stat_attack))
         self.assertContains(response, "Defense: " + str(pet.stat_defense))
         self.assertContains(response, "Speed: " + str(pet.stat_speed))
-
-    def test_directory_links_inventory(self):  # This tests if the buttons that link to other pages work properly
-        c = Client()
-
-        response1 = c.get('/inventory/')
-        response2 = c.get('/inventory/pets/')
-        response3 = c.get('/inventory/items/')
-
-        homepage = '>Home</a></li>'
-        inventory_base = '>View Inventory</a></li>'
-        photo_upload = '>Upload a Photo</a></li>'
-
-        # Base inventory page
-        self.assertContains(response1, homepage)  # Is the Home link rendered properly?
-        self.assertContains(response1, photo_upload)  # Is the inventory link rendered properly?
-
-        # /inventory/pets/ page
-        self.assertContains(response2, homepage)  # Is the Home link rendered properly?
-        self.assertContains(response2, inventory_base)  # Is the inventory link rendered properly?
-        self.assertContains(response2, photo_upload)  # Is the photo upload link rendered properly?
-
-        # /inventory/items/ page
-        self.assertContains(response3, homepage)  # Is the Home link rendered properly?
-        self.assertContains(response3, inventory_base)  # Is the inventory link rendered properly?
-        self.assertContains(response3, photo_upload)  # Is the photo upload link rendered properly?
 
     def test_url_exists_at_correct_location(self):
         c = Client()

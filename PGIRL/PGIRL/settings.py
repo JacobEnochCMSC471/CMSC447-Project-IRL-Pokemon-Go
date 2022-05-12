@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'accounts',
     'Map',
     'verification',
+    'login',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,3 +125,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = "/"  # Take the user to homepage after login
+LOGOUT_REDIRECT_URL = "/"  # Take user to homepage after logout

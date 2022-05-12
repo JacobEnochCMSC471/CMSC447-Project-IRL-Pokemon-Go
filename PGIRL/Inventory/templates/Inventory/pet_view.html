@@ -1,18 +1,12 @@
 <!DOCTYPE html>
+{% extends 'base/base.html' %}
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{{ pet.pet_name }}</title>
+        <title>{{ View Pet }}</title>
     </head>
     <body>
-        <div><h1 style="font-size:40px"> {{ pet.pet_name }}</h1></div>
-        <span><img src="../../../../media/{{ pet.image }}" alt="Pet Image Here" class="center"></span>
-        <span><br></span>
-        <div><p style="font-size:25px"> Verified: {{ pet.verified_status }}</p></div>
-        <div><p style="font-size:25px"> Type: {{ pet.user_label }}</p></div>
-        <div></div>
-        <div></div>
-
+    {% block stuff %}
         <div><p style="font-size:30px"> Stats:</p></div>
         <div><p style="font-size:20px"> HP: {{ pet.stat_hp }}</p></div>
         <div><p style="font-size:20px"> Attack: {{ pet.stat_attack }}</p></div>
@@ -22,9 +16,9 @@
             <input type="submit" value="Return to Inventory List" />
         </form>
         <br>
-
         <form action="{% url 'map' %}">
             <input type="submit" value="Return to Map" />
         </form>
+      {% endblock %}
     </body>
 </html>

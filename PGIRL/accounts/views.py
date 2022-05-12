@@ -8,21 +8,29 @@ from accounts.forms import (
 from .models import Profile
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.urls import resolve
+
 
 def register(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        
+
         if form.is_valid():
             form.save()
-            messages.success(
-                request, f'Your account has been created! You are now able to log in')
-            return redirect('map')
+            return redirect('register_success')
+
+        elif len(form.errors) != 0:
+            errors = form.errors
+            return render(request, 'register_fail.html', {
+        'errors': errors,
+    })
+
     else:
         form = RegistrationForm()
 
         args = {'form': form}
         return render(request, 'register.html', args)
+
 
 def edit_profile(request):
     if request.method == 'POST':
@@ -38,6 +46,7 @@ def edit_profile(request):
         args = {'form': form}
         return render(request, 'edit_profile.html', args)
 
+
 def view_profile(request, pk=None):
     if pk:
         user = User.objects.get(pk=pk)
@@ -46,3 +55,10 @@ def view_profile(request, pk=None):
     args = {'user': user}
     return render(request, 'profile.html', args)
 
+
+def register_success(request):
+    return render(request, 'register_success.html')
+
+
+def register_fail(request):
+    return render(request, 'register_fail.html')

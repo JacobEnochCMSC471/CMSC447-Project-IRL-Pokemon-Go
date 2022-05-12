@@ -1,48 +1,20 @@
 <!DOCTYPE html>
-
+{% extends 'base/base.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Pokemon Go IRL Image Upload</title>
     {% block title %}<title>Pokemon Go IRL</title>{% endblock %}
 </head>
+<body>
+
+</body>
+{% block stuff %}
 <form method = "post" enctype="multipart/form-data">
     <div><h1 style="font-size:40px"> Photo Uploader</h1></div>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
-    <div class="container-fluid">
-        <div class="row">
-            <!--
-            <div class="col-sm-2">
-                {% block sidebar %}
-                <ul class="sidebar-nav">
-                    <li><a href="{% url 'landing_page' %}">Home</a></li>
-                    <li><a href="{% url 'map' %}">Map</a></li>
-                    <li><a href="{% url 'select_list' %}">View Inventory</a></li>
-                </ul>
-                {% endblock %}
-            </div>
-            <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
-            -->
-            <br>
-            <br>
-            <br>
-            <form action="{% url 'select_list' %}">
-                <input type="submit" value="Return to Inventory List" />
-            </form>
-            <br>
-            
-            <br>
-            <form action="{% url 'map' %}">
-                <input type="submit" value="Return to Map" />
-            </form>
-            <br>
-
-            <form action="{% url 'landing_page' %}">
-                <input type="submit" value="Return to Home Page" />
-            </form>
-            <br>
-        </div>
-    </div>
+</form>
+{% endblock %}
 </html>
