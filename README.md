@@ -12,7 +12,7 @@ A project that consists of 5 iterations of an agile development cycle.
 * There are now links to the WIP upload, inventory and verification pages. No URL editing in the address bar required! 
 * All tests found throughout all of the applications can be ran via `python manage.py test`
 * The verification test requires the installation of selenium and webdriver. The lines to do so are: 
-    pip install selenium &
+    pip install selenium
     pip install webdriver-manager
 * Tests for individual applications can be ran via `python manage.py test <Applicaton Directoy Name>`, eg `python manage.py test Photo_Uploader` for upload tests only
 
