@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Inventory',
     'Photo_Uploader',
+    'accounts',
     'Map',
     'verification',
     'django.contrib.admin',
