@@ -35,6 +35,9 @@ class ProfileModelTests(TestCase):
         response1 = c.get('/accounts/register/')
         response2 = c.get('/accounts/edit/')
         response3 = c.get('/accounts/profile/')
+        response4 = c.get('/accounts/register/success/')
+        response_5 = c.get('accounts/register/')
+
 
         self.assertEqual(response1.status_code, 200)
         self.assertEqual(response2.status_code, 200)
@@ -72,7 +75,7 @@ class ProfileModelTests(TestCase):
         code = response.status_code
 
         self.assertEqual(code, 302)  # Redirect to login page for successful registration
-        self.assertRedirects(response, '/login/login/')  # Does it redirect to the right place?
+        self.assertRedirects(response, '/accounts/register/success/')  # Does it redirect to the right place?
 
         # Test that the user was registered successfully by checking if the username exists
         try:

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile
+from django.contrib.auth import views
 
 
 class RegistrationForm(UserCreationForm):
@@ -24,6 +25,7 @@ class RegistrationForm(UserCreationForm):
             user.email = self.cleaned_data['email']
 
             if commit:
+                print('commit pass')
                 user.save()
             return user
 

@@ -6,9 +6,14 @@
     <title>Title</title>
 </head>
 <body>
-
 {% block stuff %}
-<p><b>Image successfully uploaded! You may now sign in.</b></p>
+<p><b>An error has occured! The error(s) are displayed below.</b></p>
+
+{% if errors %}
+    {{ errors }}
+<a href="">Return to registration?</a>
+{% endif %}
+
 {% endblock %}
 </body>
 </html>

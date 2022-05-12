@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 {% extends 'base/base.html' %}
 <html>
-    <head>
+ <head>
         <meta charset="utf-8">
         <title>Register</title>
     </head>
     <body>
-
     {% block stuff %}
+    {% block body %}
     <div class="container">
         <h1>Register</h1>
         <form method="post">
@@ -16,6 +16,7 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    {% endblock %}
     {% endblock %}
     </body>
 </html>

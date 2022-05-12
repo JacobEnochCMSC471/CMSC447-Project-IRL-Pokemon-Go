@@ -70,7 +70,7 @@ class LoginTests(TestCase):
         response2 = c.get('')
 
         self.assertNotContains(response2, 'Inventory')
-        self.assertNotContains(response2, 'map')
+        self.assertNotContains(response2, 'Map')
         self.assertNotContains(response2, 'View Profile')
         self.assertNotContains(response2, 'Edit Profile')
         self.assertNotContains(response2, 'logout')

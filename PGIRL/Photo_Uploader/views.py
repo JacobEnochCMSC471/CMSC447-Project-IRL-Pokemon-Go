@@ -6,6 +6,7 @@ from datetime import datetime
 import os
 import shutil
 
+
 # Tutorial: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Home_page
 
 def remove_bad_photos(threshold):
