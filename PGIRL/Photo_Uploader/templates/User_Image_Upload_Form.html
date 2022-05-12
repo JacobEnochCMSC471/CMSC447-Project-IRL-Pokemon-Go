@@ -7,11 +7,13 @@
     {% block title %}<title>Pokemon Go IRL</title>{% endblock %}
 </head>
 <form method = "post" enctype="multipart/form-data">
+    <div><h1 style="font-size:40px"> Photo Uploader</h1></div>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
     <div class="container-fluid">
         <div class="row">
+            <!--
             <div class="col-sm-2">
                 {% block sidebar %}
                 <ul class="sidebar-nav">
@@ -22,6 +24,25 @@
                 {% endblock %}
             </div>
             <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
+            -->
+            <br>
+            <br>
+            <br>
+            <form action="{% url 'select_list' %}">
+                <input type="submit" value="Return to Inventory List" />
+            </form>
+            <br>
+            
+            <br>
+            <form action="{% url 'map' %}">
+                <input type="submit" value="Return to Map" />
+            </form>
+            <br>
+
+            <form action="{% url 'landing_page' %}">
+                <input type="submit" value="Return to Home Page" />
+            </form>
+            <br>
         </div>
     </div>
 </html>
