@@ -1,7 +1,7 @@
 # CMSC447-Project-IRL-Pokemon-Go
 A project that consists of 5 iterations of an agile development cycle. 
 
-### Current Release: v0.3.0-prealpha 
+### Current Release: v0.3.1-prealpha 
 
 ### FOR TESTING:
 * Change directory to outer PGIRL directory ...\PGIRL -> `python manage.py test` in terminal to run the tests
