@@ -12,6 +12,7 @@ from django.urls import reverse
 def register(request):
     if request.method =='POST':
         form = RegistrationForm(request.POST)
+        
         if form.is_valid():
             form.save()
             messages.success(
@@ -25,6 +26,8 @@ def register(request):
 
 def edit_profile(request):
     if request.method == 'POST':
+        print("Request :")
+        print(request.POST)
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():

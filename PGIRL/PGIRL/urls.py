@@ -21,7 +21,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inventory/', include('Inventory.urls')),
-    path('accounts/', include('accounts.urls')),
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace = 'accounts')),
     path('', include('Photo_Uploader.urls')),
     path('map/', include('Map.urls')),
     path('verification/', include('verification.urls'))
