@@ -7,8 +7,6 @@
     </head>
     <body>
     {% block stuff %}
-        <div></div>
-    {% if pet %}
         <div><p style="font-size:30px"> Stats:</p></div>
         <div><p style="font-size:20px"> HP: {{ pet.stat_hp }}</p></div>
         <div><p style="font-size:20px"> Attack: {{ pet.stat_attack }}</p></div>
@@ -21,16 +19,6 @@
         <form action="{% url 'map' %}">
             <input type="submit" value="Return to Map" />
         </form>
-    {% else %}
-    <p> No pets to display!</p>
-    <form action="{% url 'select_list' %}">
-            <input type="submit" value="Return to Inventory List" />
-        </form>
-        <br>
-        <form action="{% url 'map' %}">
-            <input type="submit" value="Return to Map" />
-        </form>
-    {% endif }%
-    {% endblock %}
+      {% endblock %}
     </body>
 </html>
