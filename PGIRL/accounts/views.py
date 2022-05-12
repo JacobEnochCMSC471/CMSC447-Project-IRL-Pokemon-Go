@@ -1,9 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
-from django.contrib.auth import logout
-
 from accounts.forms import (
     RegistrationForm,
     EditProfileForm
@@ -12,10 +9,11 @@ from .models import Profile
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
 def register(request):
-    if request.method == 'POST':
+    if request.method =='POST':
         form = RegistrationForm(request.POST)
+        
+
         if form.is_valid():
             form.save()
             messages.success(
@@ -27,9 +25,11 @@ def register(request):
         args = {'form': form}
         return render(request, 'register.html', args)
 
-
 def edit_profile(request):
     if request.method == 'POST':
+        print("Request :")
+        print(request.POST)
+        
         form = EditProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():

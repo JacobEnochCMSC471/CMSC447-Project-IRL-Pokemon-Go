@@ -1,29 +1,28 @@
 <!DOCTYPE html>
-{% extends 'base/base.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Let's verify some pets NOW</title>
 </head>
 <body>
-{% block stuff %}
-<div class="container">
-    Is this image a {{pet_name}}? <br/>
-    <!-- See if this displays an image, or just the img jpg-->
-    <img src="{{image}}" width="300" height="300"> <br/>
+    <div class="container">
+        Is this image a {{pet_name}}? <br/>
+        <!-- See if this displays an image, or just the img jpg-->
+        <img src="{{image}}" width="300" height="300"> <br/>
 
-    <form method = "post" action="{% url 'answer_yes' %}">
-        {% csrf_token %}
-        <button id="yesbtn" type="submit" formaction="{% url 'answer_yes' %}">Yes</button>
-    </form>
+        <form method = "post" action="{% url 'answer_yes' %}">
+            {% csrf_token %}
+            <button id="yesbtn" type="submit" formaction="{% url 'answer_yes' %}">Yes</button>
+        </form>
 
-    <form method = "post" action="{% url 'answer_no' %}">
-        {% csrf_token %}
-        <button id="nobtn" type="submit" formaction="{% url 'answer_no' %}">No</button>
-    </form>
-    <br/>
-    <a id="home" href="{% url 'landing_page' %}">Return Home</a>
-</div>
-{% endblock %}
+        <form method = "post" action="{% url 'answer_no' %}">
+            {% csrf_token %}
+            <button id="nobtn" type="submit" formaction="{% url 'answer_no' %}">No</button>
+        </form>
+        <br/>
+        <a id="home" href="{% url 'landing_page' %}">Return Home</a>
+        <a href="{% url 'map' %}">Map</a>
+
+    </div>
 </body>
 </html>

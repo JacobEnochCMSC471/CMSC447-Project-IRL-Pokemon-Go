@@ -6,7 +6,8 @@
         <title>Edit Profile</title>
     </head>
     <body>
-    {% block stuff %}
+    
+	{% block stuff %}
     <div class="container">
         <form method="post">
             {% csrf_token %}
@@ -15,7 +16,6 @@
         </form>
         <br>
     </div>
-
     {% endblock %}
     </body>
 </html>

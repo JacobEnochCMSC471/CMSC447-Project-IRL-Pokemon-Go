@@ -84,3 +84,4 @@ class ProfileModelTests(TestCase):
             passed = False
 
         self.assertEqual(passed, True)
+    

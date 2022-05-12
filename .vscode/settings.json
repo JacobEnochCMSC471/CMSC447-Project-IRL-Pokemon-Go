@@ -1,0 +1,14 @@
+{
+    "python.testing.pytestArgs": [
+        "PGIRL"
+    ],
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./PGIRL",
+        "-p",
+        "test*.py"
+    ]
+}

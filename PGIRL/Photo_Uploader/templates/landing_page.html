@@ -12,15 +12,46 @@
   </head>
   <style >
     body {
-      background-color: #FFEFD5
+      background: #62b2db;
+      background-image: url("../../media/HTML_Images/enter.png");
+      background-size: 90%;
+      background-position-x: 80px;
+      background-repeat: no-repeat;
 }
+    .button {
+  background-color: rgb(160,23,46);
+  border: 5px solid rgb(115,13,30);
+border-radius: 14px;
+
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 70px;
+      font-family: Ebrima;
+  margin: 4px 2px;
+  cursor: pointer;
+
+      position: absolute;
+  left: 41%;
+  top: 79%;
+
+      box-shadow: 0 9px #4a190a;
+}
+
+  .button:hover {background-color: #821023}
+  .button:active {
+  background-color: #821023;
+  box-shadow: 0 5px #301006;
+  transform: translateY(4px);
+}
+
   </style>
   <body>
-
   {% block stuff %}
  <!-- In case stuff wants to be added later under the navbar-->
   {% endblock %}
-
   </body>
 </html>
 
