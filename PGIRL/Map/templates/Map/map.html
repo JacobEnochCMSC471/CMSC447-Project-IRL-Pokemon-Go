@@ -119,20 +119,20 @@
 
         <form method = "post" action="{% url 'shop' %}">
             {% csrf_token %}
-            <button class="btn btn-1" type="submit">Shop</button>
+            <button id= "shop" class="btn btn-1" type="submit">Shop</button>
         </form>
 
         <form method = "post" action="{% url 'training' %}">
             {% csrf_token %}
-            <button class="btn btn-2" type="submit">Training Grounds</button>
+            <button id= "training" class="btn btn-2" type="submit">Training Grounds</button>
         </form>
 
         <form method = "post" action="{% url 'challenges' %}">
             {% csrf_token %}
-            <button class="btn btn-3" type="submit">Challenges</button>
+            <button id= "challenges" class="btn btn-3" type="submit">Challenges</button>
         </form>
 
-        <button class="btn btn-4" type="submit">Profile</button>
+        <button id= "profile" class="btn btn-4" type="submit">Profile</button>
 
     </body>
 </html>
