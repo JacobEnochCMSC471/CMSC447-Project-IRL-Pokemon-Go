@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base/base.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+{% block stuff %}
+<h2>Log In</h2>
+{% if user.is_authenticated %}
+    <p> You are already logged in!</p>
+    <a href="{% url 'landing_page' %}">Return Home</a>
+
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log In</button>
+    </form>
+{% endif %}
+
+<p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+{% endblock %}
+</body>
+</html>

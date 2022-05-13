@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <title>Map</title>
+        <style>
+            body{
+                background: black;
+                background-image: url("../../../media/HTML_Images/challenges.png");
+                background-size: 87%;
+                background-position-y: -10px;
+                background-position-x: 80px;
+
+                background-repeat: no-repeat;
+            }
+
+
+
+            .btn {
+              background-color: white;
+              border: 4px solid #7d7b7a;
+                border-radius: 3px;
+
+              color: black;
+              padding: 5px 10px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 30px;
+              font-family: fantasy;
+              margin: 4px 2px;
+              cursor: pointer;
+
+                position: absolute;
+              left: 79%;
+              top: 87%;
+            }
+
+            .btn:hover {background-color: #d9d0c5}
+  .btn:active {
+  background-color: #d9d0c5;
+}
+
+        </style>
+    </head>
+    <body>
+        <form method = "post" action="{% url 'map' %}">
+            {% csrf_token %}
+            <button id="return" class="btn" type="submit">Return</button>
+        </form>
+
+    </body>
+</html>

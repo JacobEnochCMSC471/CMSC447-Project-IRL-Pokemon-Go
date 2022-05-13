@@ -2,6 +2,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
 
+
 from . import views
 from .views import upload_photo_to_db, success, error
 

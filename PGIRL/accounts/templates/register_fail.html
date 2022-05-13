@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'base/base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block stuff %}
+<p><b>An error has occured! The error(s) are displayed below.</b></p>
+
+{% if errors %}
+    {{ errors }}
+<a href="">Return to registration?</a>
+{% endif %}
+
+{% endblock %}
+</body>
+</html>
