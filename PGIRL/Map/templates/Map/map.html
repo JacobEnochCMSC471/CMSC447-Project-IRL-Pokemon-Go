@@ -132,7 +132,10 @@
             <button id="challenges" class="btn btn-3" type="submit">Challenges</button>
         </form>
 
+        <form method = "post" action="{% url 'view_profile' %}">
+            {% csrf_token %}
         <button id="profile" class="btn btn-4" type="submit">Profile</button>
+        </form>
 
     </body>
 </html>
