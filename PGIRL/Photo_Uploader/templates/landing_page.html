@@ -59,21 +59,45 @@ border-radius: 14px;
           </button>
           <div class="collapse navbar-collapse" id="navbarsExample05">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+               {% if not user.is_authenticated %}
               <li class="nav-item"> <!--Link to Login Page (TBD)-->
-            <a class="nav-link active" href="#">Login</a>
+            <a class="nav-link active" href="{% url 'login' %}">Login</a>
               </li>
+              {% endif %}
+               {% if user.is_authenticated %}
               <li class="nav-item"> <!--Link to Image Uploader-->
                 <a class="nav-link active" href="{% url 'image_upload' %}">Upload an Image</a>
               </li>
+              {% endif %}
+              {% if user.is_authenticated %}
               <li class="nav-item"> <!--Link to Inventory-->
                 <a class="nav-link active" href="{% url 'select_list' %}">Inventory</a>
               </li>
+              {% endif %}
               <li class="nav-item"> <!--Link to Image Verification (TBD - % url 'verify' % -->
                 <a class="nav-link active" href="{% url 'verify' %}">Verify Images</a>
               </li>
-              <li class="nav-item"> <!--Link to Map (TBD)-->
+               {% if user.is_authenticated %}
+              <li class="nav-item">
                 <a class="nav-link active" href="{% url 'map' %}">View Map</a>
               </li>
+              {% endif %}
+              {% if not user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'register' %}">Make an account</a>
+              </li>
+              {% endif %}
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'view_profile' %}">View Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'edit_profile' %}">Edit Profile</a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link active" href="{% url 'logout' %}">Logout</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -89,5 +113,4 @@ border-radius: 14px;
 </html>
 
 <!--
-
  -->

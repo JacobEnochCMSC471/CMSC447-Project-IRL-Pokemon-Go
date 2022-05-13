@@ -15,6 +15,21 @@ class MapTester(StaticLiveServerTestCase):
         response = c.get("/map/")
         self.assertEqual(response.status_code, 200)
 
+    def test_home_btn(self):
+        c = Client()
+        # Here we go with serelium again :(
+        selenium = webdriver.Chrome(ChromeDriverManager().install())
+        selenium.implicitly_wait(0.5)
+        selenium.get('%s%s' % (self.live_server_url, ''))
+
+        # Test find the button (throws error if it doesn't)
+        go_btn = selenium.find_element_by_id('go_btn')
+        go_btn.submit()
+
+        response1 = c.get('/map/')
+        self.assertEqual(response1.status_code, 200)  # Page is up
+        print("Returned to map page.")
+        #Test passed
 
     def test_buttons_and_pages(self):
         c = Client()
