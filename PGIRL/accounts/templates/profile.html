@@ -1,23 +1,22 @@
 <!DOCTYPE html>
+{% extends 'base/base.html' %}
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Profile</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+</head>
+<body>
+{% block stuff %}
+<div class="container">
+    <h1>Profile</h1>
+    <p>user: {{ user }}</p>
+    <p>level: {{ user.level }}</p>
+    <p>experience: {{ user.experience }}</p>
+    {% if user.profile_picture.image %}
+    <img src="{{ user.profile_picture.image.url }}" width="240">
+    {% endif %}
+</div>
+{% endblock %}
+</body>
 
-    <body>
-
-    {% block body %}
-    <div class="container">
-        <h1>Profile</h1>
-        <p>user: {{ user }}</p>
-        <p>level: {{ user.level }}</p>
-        <p>experience: {{ user.experience }}</p>
-        {% if user.profile_picture.image %}
-        <img src="{{ user.profile_picture.image.url }}" width="240">
-        {% endif %}
-    </div>
-
-    {% endblock %}
-    </body>
 </html>

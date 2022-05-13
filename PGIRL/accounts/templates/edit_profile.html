@@ -1,13 +1,13 @@
 <!DOCTYPE html>
+{% extends 'base/base.html' %}
 <html>
     <head>
         <meta charset="utf-8">
         <title>Edit Profile</title>
     </head>
     <body>
-
-
-
+    
+	{% block stuff %}
     <div class="container">
         <form method="post">
             {% csrf_token %}
@@ -16,6 +16,6 @@
         </form>
         <br>
     </div>
-
+    {% endblock %}
     </body>
 </html>
