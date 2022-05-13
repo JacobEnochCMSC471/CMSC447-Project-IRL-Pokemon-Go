@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.db.models.signals import post_save
 from Inventory.models import Item
+
 class Profile(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture=models.ImageField(default='default.jpg', upload_to='profile_pics')
