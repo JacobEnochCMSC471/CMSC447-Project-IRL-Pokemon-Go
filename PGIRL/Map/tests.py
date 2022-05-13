@@ -109,6 +109,17 @@ class MapTester(StaticLiveServerTestCase):
         self.assertEqual(response1.status_code, 200)  # Page is up
         print("Returned to map page.")
 
+        # ************************************************************************************************
+        WebDriverWait(selenium, 20).until(EC.presence_of_element_located((By.ID, "profile")))
+        print("Pressing challenges button.")
+        prof_btn = selenium.find_element_by_id('profile')
+        prof_btn.submit()
+
+        response1 = c.get('/accounts/profile/')
+        self.assertEqual(response1.status_code, 200)  # Page is up
+
+        print("Profile page loaded.")
+
         #All tests complete :)
         print("Testing complete :)")
         pass
