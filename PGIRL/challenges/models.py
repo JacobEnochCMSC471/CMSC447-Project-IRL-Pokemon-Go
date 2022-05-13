@@ -33,10 +33,10 @@ class Challenge(models.Model):
         
         if reward_item:
             items = {
-                "Stick": ["A basic stick", 1, 'media/test_uploads/big_oof.PNG'],
-                "Rock": ["It's a rock", 1, 'media/test_uploads/big_oof.PNG'],
-                "Berry1": ["Don't eat it", 1, 'media/test_uploads/big_oof.PNG'],
-                "Berry2": ["Eat it", 1, 'media/test_uploads/big_oof.PNG']
+                "Stick": ["A basic stick", 1, 'media/items/branch.png'],
+                "Rock": ["It's a rock", 1, 'media/items/rock.png'],
+                "Gubgub Berry": ["Don't eat it", 1, 'media/items/gubgub.png'],
+                "Bokki Berry": ["Eat it", 1, 'media/items/bokki.png']
             }
 
             item_name = random.choice(items)
