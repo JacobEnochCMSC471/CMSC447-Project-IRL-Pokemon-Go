@@ -120,11 +120,11 @@
     <img class="img img-2" src="{{enemy_img}}">
 
     <div class="myDiv">
-        <form id="att" method = "post" action="{% url 'battle_action' %}">
+        <form name="att" method = "post" action="{% url 'attacc' %}">
             {% csrf_token %}
             <button id="attack" class="btn attack" type="submit">ATTACK!</button>
         </form>
-        <form id="noth" method = "post" action="{% url 'battle_action' %}">
+        <form name="noth" method = "post" action="{% url 'battle_action' %}">
             {% csrf_token %}
             <button id="nothing" class="btn nothing" type="submit">DO NOTHING!</button>
         </form>

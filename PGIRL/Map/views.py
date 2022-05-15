@@ -8,6 +8,7 @@ from datetime import datetime
 chall_list = []
 pet_health =None
 pet_strength = None
+option = None
 
 def map(request):
     return render(request, 'Map/map.html')
@@ -41,32 +42,33 @@ def refresh(request):
 
 #Pick a pet, open the challenge page, delete the other challenges from db and reset list
 def chall(request):
+    global chall_list
+    global pet_health
+    global pet_strength
+    global option
+
     # check if they have a pet.. if not then kick them out!
-    items = list(Photo_Data.objects.filter(verified_status=True))
+    items = list(Photo_Data.objects.filter(user_id=2))
 
     # only pick a random pet IF there's an image hehe
     if len(items) == 0:
         print("No pets to complete challenges.. returning to map.")
         return render(request, 'Map/no_pets.html')
 
-    global chall_list
-    global pet_health
-    global  pet_strength
-
-
     #If we haven't already...
-    if len(chall_list) != 1:
-        items[0] = random.choice(items)
+    if option != None:
         pet_health = items[0].stat_hp
         pet_strength = items[0].stat_attack
         #identify which challenge..
-        if request.POST.get("ch1"):
+        if option ==1:
             chall_list = [chall_list[0]]
-        elif request.POST.get("ch2"):
+        elif option ==2:
             chall_list = [chall_list[1]]
         else:
             chall_list = [chall_list[2]]
 
+        #reset
+        option =None
 
     #make sure to pass the contect (update the image 'img1': "../../../media/enemies/" + str(),)
     cont = {
@@ -78,35 +80,55 @@ def chall(request):
 
     return render(request, 'Map/battle.html', context=cont)
 
+#The 3 following are dedicated to whichever challenge is selected
+def ch1(request):
+    print("Challenge 1 selected")
+    global option
+    option =1
+    return redirect("chall")
+
+def ch2(request):
+    print("Challenge 2 selected")
+    global option
+    option = 2
+    return redirect("chall")
+
+def ch3(request):
+    print("Challenge 3 selected")
+    global option
+    option = 3
+    return redirect("chall")
+
 #move for attack or quit, also deal with battle end (delete chall when done). clear chall list
 def battle_action(request):
     global chall_list
     global pet_health
     global pet_strength
 
-    # decrement healths
-    if request.POST.get("noth"):
-        pet_health -= chall_list[0].enemy_att
-    else:
-        pet_health -= chall_list[0].enemy_att
-        chall_list[0].enemy_hp -= pet_strength
+    pet_health -= chall_list[0].enemy_att
 
     #check for win/lose, clear DB
-    if pet_health <0:
-        print("Pet lost :(")
-        Challenge.objects.all().delete()
-        return render(request, 'Map/lose_screen.html')
-
-    if chall_list[0].enemy_hp <0:
+    if chall_list[0].enemy_hp <=0:
         print("pet win!!")
         Challenge.objects.all().delete()
         return render(request, 'Map/win_screen.html')
 
-
-    pet_health -=chall_list[0].enemy_att
-    chall_list[0].enemy_hp -= pet_strength
+    if pet_health <=0:
+        print("Pet lost :(")
+        Challenge.objects.all().delete()
+        return render(request, 'Map/lose_screen.html')
 
     return redirect('chall')
+
+#if the player attacks
+def attacc(request):
+    global chall_list
+    global pet_health
+    global pet_strength
+    chall_list[0].enemy_hp -= pet_strength
+
+    return redirect('battle_action')
+
 
 def create_challenge():
     random.seed(datetime.now())

@@ -92,7 +92,7 @@
             <h2>CHALLENGE 1: {{c1.challenge_type}}</h2>
             <p>MIN PET HP: {{c1.required_health}} -- MIN LVL: {{c1.required_level}} -- MIN EX: {{c1.required_experience}}</p>
 
-            <form id="ch1" method = "post" action="{% url 'chall' %}">
+            <form id="ch1" method = "post" action="{% url 'ch1' %}">
                 {% csrf_token %}
                 <button  class="btn btn-3" type="submit">Choose</button>
             </form>
@@ -102,7 +102,7 @@
             <h2>CHALLENGE 2: {{c2.challenge_type}}</h2>
             <p>MIN PET HP: {{c2.required_health}} -- MIN LVL: {{c2.required_level}} -- MIN EX: {{c2.required_experience}}</p>
 
-            <form id="ch2" method = "post" action="{% url 'chall' %}">
+            <form id="ch2" method = "post" action="{% url 'ch2' %}">
                 {% csrf_token %}
                 <button  class="btn btn-3" type="submit">Choose</button>
             </form>
@@ -111,7 +111,7 @@
         <div class="myDiv myDiv-3">
             <h2>CHALLENGE 3: {{c3.challenge_type}}</h2>
             <p>MIN PET HP: {{c3.required_health}} -- MIN LVL: {{c3.required_level}} -- MIN EX: {{c3.required_experience}}</p>
-            <form id="ch3" method = "post" action="{% url 'chall' %}">
+            <form id="ch3" method = "post" action="{% url 'ch3' %}">
                 {% csrf_token %}
                 <button  class="btn btn-3" type="submit">Choose</button>
             </form>
