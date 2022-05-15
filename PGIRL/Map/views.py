@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from PGIRL.Map.models import Challenge
+from challenges.models import Challenge
+import random
 
 chall_list = None #drastic measures
 pet_health =None
@@ -66,7 +67,7 @@ def chall(request):
     #make sure to pass the contect (update the image 'img1': "../../../media/enemies/" + str(),)
     cont = {
         'image': "../../../media/" + str(items[0].image),
-        'enemy_img': "../../../media/" + str(chall_list[0].image_),
+        'enemy_img': "../../../media/" + str(chall_list[0].image),
         'pet_hp': pet_health,
         'en_hp': chall_list[0].enemy_hp
     }
@@ -124,6 +125,6 @@ def create_challenge():
     elif x == 3:
         e_hp = random.randint(18, 24)
 
-    c =Challenge.objects.create(required_level=level, required_experience=ex, required_health=hp, image_=img_name,
+    c =Challenge.objects.create(required_level=level, required_experience=ex, required_health=hp, image=img_name,
                              enemy_hp=e_hp)
     return c

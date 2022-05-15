@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'Photo_Uploader',
     'accounts',
     'Map',
+    'challenges',
     'verification',
     'login',
     'django.contrib.admin',

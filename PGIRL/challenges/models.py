@@ -1,8 +1,8 @@
 from django.db import models
 import random
-from PGIRL.Inventory.models import Item
+from Inventory.models import Item
 
-from PGIRL.Photo_Uploader.models import Photo_Data
+from Photo_Uploader.models import Photo_Data
 
 class Challenge(models.Model):
     #should have level req, ex req, minimum pet health, type of challenge, png, if its done
@@ -10,7 +10,7 @@ class Challenge(models.Model):
     required_experience=models.IntegerField(default=0)
     required_health = models.IntegerField(default=0)
     challenge_type = models.CharField(max_length=10, default="Battle")
-    image_ = models.CharField(max_length=20, default="")
+    image = models.CharField(max_length=20, default="")
     completed = models.BooleanField(default=False)
     enemy_hp=models.IntegerField(default=15)
     enemy_att = models.IntegerField(default=2)
