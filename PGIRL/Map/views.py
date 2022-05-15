@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from challenges.models import Challenge
+from Photo_Uploader.models import Photo_Data
 import random
+from datetime import datetime
+
 
 chall_list = None #drastic measures
 pet_health =None
@@ -44,7 +47,7 @@ def chall(request):
     # only pick a random pet IF there's an image hehe
     if len(items) == 0:
         print("No pets to complete challenges.. returning to map.")
-        return render(request, 'Map/map.html')
+        return render(request, 'Map/no_pets.html')
 
     global chall_list
     global pet_health
@@ -98,6 +101,7 @@ def battle_action(request):
     return redirect('chall')
 
 def create_challenge():
+    random.seed(datetime.now())
     # Roll for requirement!
     x = random.randint(0, 1)
     level = 0

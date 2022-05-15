@@ -46,7 +46,8 @@ def upload_photo_to_db(request):
         if form.is_valid():
             print("Saved successfully")
             new_photo_object = form.save()  # Get a reference to the newly saved DB object that was just created and saved - add to verify queue
-
+            new_photo_object.roll_stats()
+            new_photo_object.save()
             return redirect('success')
 
         else:
