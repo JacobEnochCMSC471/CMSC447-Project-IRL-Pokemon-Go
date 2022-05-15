@@ -15,7 +15,7 @@ class Challenge(models.Model):
     enemy_hp=models.IntegerField(default=15)
     enemy_att = models.IntegerField(default=2)
 
-    def reward_player(pet: Photo_Data):
+    def reward_player(self, pet: Photo_Data):
         reward_stats = random.randint(0, 1)
         reward_item = random.randint(0, 1)
 
@@ -46,6 +46,7 @@ class Challenge(models.Model):
                 "Bokki Berry": ["Eat it", 1, 'media/items/bokki.png']
             }
 
-            item_name = random.choice(items)
+            item_name = (list(items))[random.randint(0, 3)]
             item_info = items[item_name]
-            Item.objects.create(user_id=pet.user_id, name=item_name, description=item_info[0], quantity=item_info[1], image=item_info[2])
+            i = Item.objects.create(user_id=pet.user_id, name=item_name, description=item_info[0], quantity=item_info[1], image=item_info[2])
+            i.save()

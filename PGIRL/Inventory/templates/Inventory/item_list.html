@@ -9,7 +9,8 @@
     {% block stuff %}
         {% if items %}
             {% for item in items %}
-                <div>{{ item.image }} {{ item.name }} {{ item.description }}</div>
+                <div><img width="200px" height="200px" src="../../../{{ item.image }}">
+                    <h3>{{ item.name }}</h3> <p>{{ item.description }}</p></div>
             {% endfor %}
         {% else %}
             <p>No items?</p>

@@ -4,11 +4,11 @@ from Photo_Uploader.models import Photo_Data
 import random
 from datetime import datetime
 
-
 chall_list = []
 pet_health =None
 pet_strength = None
 option = None
+pet = None
 
 def map(request):
     return render(request, 'Map/map.html')
@@ -46,6 +46,7 @@ def chall(request):
     global pet_health
     global pet_strength
     global option
+    global pet
 
     # check if they have a pet.. if not then kick them out!
     items = list(Photo_Data.objects.filter(user_id=2))
@@ -54,6 +55,8 @@ def chall(request):
     if len(items) == 0:
         print("No pets to complete challenges.. returning to map.")
         return render(request, 'Map/no_pets.html')
+
+    pet = items[0]
 
     #If we haven't already...
     if option != None:
@@ -104,12 +107,14 @@ def battle_action(request):
     global chall_list
     global pet_health
     global pet_strength
+    global pet
 
     pet_health -= chall_list[0].enemy_att
 
     #check for win/lose, clear DB
     if chall_list[0].enemy_hp <=0:
         print("pet win!!")
+        chall_list[0].reward_player(pet)
         Challenge.objects.all().delete()
         return render(request, 'Map/win_screen.html')
 
