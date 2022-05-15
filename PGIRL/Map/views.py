@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from PGIRL.Map.models import Challenge
 
 chall_list = None #drastic measures
+pet_health =None
+pet_strength = None
 
 def map(request):
     return render(request, 'Map/map.html')
@@ -30,19 +32,69 @@ def challenges(request):
 
 #Delete old challenges from db, refresh challenges view
 def refresh(request):
-    pass
+    Challenge.objects.all().delete()
+    return redirect('challenges')
 
 #Pick a pet, open the challenge page, delete the other challenges from db and reset list
 def chall(request):
+    # check if they have a pet.. if not then kick them out!
+    items = list(Photo_Data.objects.filter(verified_status=True))
+
+    # only pick a random pet IF there's an image hehe
+    if len(items) == 0:
+        print("No pets to complete challenges.. returning to map.")
+        return render(request, 'Map/map.html')
+
     global chall_list
+    global pet_health
+    global  pet_strength
+
+
+    #If we haven't already...
+    if len(chall_list) != 1:
+        pet_health = items[0].stat_hp
+        pet_strength = items[0].stat_attack
+        #identify which challenge..
+        if request.POST.get("ch1"):
+            chall_list = [chall_list[0]]
+        elif request.POST.get("ch2"):
+            chall_list = [chall_list[2]]
+        else:
+            chall_list = [chall_list[3]]
+
 
     #make sure to pass the contect (update the image 'img1': "../../../media/enemies/" + str(),)
-    pass
+    cont = {
+        'image': "../../../media/" + str(items[0].image),
+        'enemy_img': "../../../media/" + str(chall_list[0].image_),
+        'pet_hp': pet_health,
+        'en_hp': chall_list[0].enemy_hp
+    }
+
+    return render(request, 'Map/battle.html', context=cont)
 
 #move for attack or quit, also deal with battle end (delete chall when done). clear chall list
 def battle_action(request):
     global chall_list
-    pass
+    global pet_health
+    global pet_strength
+
+    #check for win/lose, clear DB
+    if pet_health <0:
+        print("Pet lost :(")
+        Challenge.objects.all().delete()
+        return render(request, 'Map/lose_screen.html')
+
+    if chall_list[0].enemy_hp <0:
+        print("pet win!!")
+        Challenge.objects.all().delete()
+        return render(request, 'Map/win_screen.html')
+
+    #decrement healths
+    pet_health -=chall_list[0].enemy_att
+    chall_list[0].enemy_hp -= pet_strength
+
+    return redirect('chall')
 
 def create_challenge():
     # Roll for requirement!

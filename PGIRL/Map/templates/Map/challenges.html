@@ -5,6 +5,31 @@
         <meta charset="utf-8">
         <title>Map</title>
         <style>
+
+            .myDiv {
+                border: 2px black;
+                background-color: floralwhite;
+                text-align: left;
+                width: 300px;
+                height: 100px;
+            }
+
+            .myDiv-1{
+                position: absolute;
+              left: 40%;
+              top: 44%;
+            }
+            .myDiv-2{
+                position: absolute;
+              left: 60%;
+              top: 44%;
+            }
+            .myDiv-3{
+                position: absolute;
+              left: 80%;
+              top: 44%;
+            }
+
             body{
                 background: black;
                 background-image: url("../../../media/HTML_Images/challenges.png");
@@ -27,11 +52,14 @@
               text-align: center;
               text-decoration: none;
               display: inline-block;
-              font-size: 30px;
+                font-size: 10px;
               font-family: fantasy;
               margin: 4px 2px;
               cursor: pointer;
+            }
 
+            .btn-1{
+                font-size: 30px;
                 position: absolute;
               left: 79%;
               top: 87%;
@@ -45,9 +73,40 @@
         </style>
     </head>
     <body>
+
+        <div class="myDiv myDiv-1">
+            <h2>CHALLENGE 1: {{c1.challenge_type}}</h2>
+            <p>PET HP REQ: {{c1.required_health}} MIN LVL: {{c1.required_level}} MIN EX: {{c1.required_experience}}</p>
+
+            <form method = "post" action="{% url 'chall' %}">
+                {% csrf_token %}
+                <button id="ch1" class="btn" type="submit">Choose</button>
+            </form>
+
+        </div>
+
+        <div class="myDiv myDiv-2">
+            <h2>CHALLENGE 1: {{c2.challenge_type}}</h2>
+            <p>PET HP REQ: {{c2.required_health}} MIN LVL: {{c2.required_level}} MIN EX: {{c2.required_experience}}</p>
+
+            <form method = "post" action="{% url 'chall' %}">
+                {% csrf_token %}
+                <button id="ch2" class="btn" type="submit">Choose</button>
+            </form>
+        </div>
+
+        <div class="myDiv myDiv-3">
+            <h2>CHALLENGE 1: {{c3.challenge_type}}</h2>
+            <p>PET HP REQ: {{c3.required_health}} MIN LVL: {{c3.required_level}} MIN EX: {{c3.required_experience}}</p>
+            <form method = "post" action="{% url 'chall' %}">
+                {% csrf_token %}
+                <button id="ch3" class="btn" type="submit">Choose</button>
+            </form>
+        </div>
+
         <form method = "post" action="{% url 'map' %}">
             {% csrf_token %}
-            <button id="return" class="btn" type="submit">Return</button>
+            <button id="return" class="btn btn-1" type="submit">Return</button>
         </form>
 
     </body>

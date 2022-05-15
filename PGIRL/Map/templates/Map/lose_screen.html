@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pain</title>
+</head>
+<body>
+<h1>Oop! you lost..</h1>
+<h2>maybe you should go train up. better luck next time!</h2>
+<form method = "post" action="{% url 'map' %}">
+            {% csrf_token %}
+            <button id="return" type="submit">To The Map!</button>
+        </form>
+</body>
+</html>

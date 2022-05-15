@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <title>Map</title>
+        <style>
+
+            .myDiv {
+                text-align: left;
+                width: 300px;
+                height: 100px;
+                bottom: 5%;
+                right: 40%;
+            }
+
+            .d{
+                text-align: center;
+                display: inline-block;
+            }
+
+
+            body{
+                background: black;
+                background-image: url("../../../media/HTML_Images/chall_bg.png");
+                background-size: 87%;
+                background-position-y: -10px;
+                background-position-x: 80px;
+
+                background-repeat: no-repeat;
+            }
+
+            .btn {
+              background-color: white;
+              border: 4px solid #7d7b7a;
+                border-radius: 3px;
+
+              color: black;
+              padding: 5px 10px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+                font-size: 10px;
+              font-family: fantasy;
+              margin: 4px 2px;
+              cursor: pointer;
+            }
+
+            .btn-1{
+                font-size: 30px;
+                position: absolute;
+              left: 79%;
+              top: 87%;
+            }
+
+            .btn:hover {background-color: #d9d0c5}
+  .btn:active {
+  background-color: #d9d0c5;
+}
+
+        .img{
+            height: 400px;
+            width: 400px;
+        }
+
+        .img-1{
+            position: absolute;
+            left: 10%;
+            top:80%;
+        }
+        .img-2{
+            position: absolute;
+            left: 80%;
+            top:10%;
+        }
+
+        </style>
+    </head>
+    <body>
+
+    <img class="img img-1" src="{{image}}">
+    <img class="img img-2" src="{{enemy_img}}">
+
+    <div class="myDiv">
+        <form method = "post" action="{% url 'battle_action' %}">
+            {% csrf_token %}
+            <div class="d"> </div>
+            <button id="attack" class="btn" type="submit">ATTACK!</button>
+            <button id="nothing" class="btn" type="submit">DO NOTHING!</button>
+        </form>
+        <p>Pet HP: {{pet_hp}} Enemy_HP: {{en_hp}}</p>
+    </div>
+
+    <form method = "post" action="{% url 'map' %}">
+            {% csrf_token %}
+            <button id="return" class="btn btn-1" type="submit">Quit</button>
+        </form>
+    </body>
+</html>
