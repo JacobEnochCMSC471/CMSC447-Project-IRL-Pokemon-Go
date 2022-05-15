@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+{% extends 'base/base.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Let's verify some pets NOW</title>
 </head>
 <body>
+{% block stuff %}
     <div class="container">
         Is this image a {{pet_name}}? <br/>
         <!-- See if this displays an image, or just the img jpg-->
@@ -24,5 +26,6 @@
         <a href="{% url 'map' %}">Map</a>
 
     </div>
+{% endblock %}
 </body>
 </html>

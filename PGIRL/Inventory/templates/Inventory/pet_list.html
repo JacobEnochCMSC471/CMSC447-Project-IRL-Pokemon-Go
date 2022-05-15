@@ -12,7 +12,7 @@
             {% if pet %}
             <div>
                 {% block content %}
-                    <img src="../../media/{{ pet.image }}">
+                    <img width="200px" height="200px" src="../../media/{{ pet.image }}">
                 {% endblock %}
                 <a href="{% url 'pet_view' pet.user_id pet.pet_name %}">{{ pet.pet_name }}</a>
             </div>

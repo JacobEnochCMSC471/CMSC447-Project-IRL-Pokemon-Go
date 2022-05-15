@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>You Won!</title>
 </head>
 <body>
+{% block stuff %}
 <h1>Nice! You won! Now get back out there :)</h1>
 <form method = "post" action="{% url 'map' %}">
             {% csrf_token %}
             <button id="return" type="submit">To The Map!</button>
         </form>
-
+{% endblock %}
 </body>
 </html>

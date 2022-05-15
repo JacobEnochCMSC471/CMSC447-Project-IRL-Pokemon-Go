@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 
 
-chall_list = None #drastic measures
+chall_list = []
 pet_health =None
 pet_strength = None
 
@@ -56,21 +56,22 @@ def chall(request):
 
     #If we haven't already...
     if len(chall_list) != 1:
+        items[0] = random.choice(items)
         pet_health = items[0].stat_hp
         pet_strength = items[0].stat_attack
         #identify which challenge..
         if request.POST.get("ch1"):
             chall_list = [chall_list[0]]
         elif request.POST.get("ch2"):
-            chall_list = [chall_list[2]]
+            chall_list = [chall_list[1]]
         else:
-            chall_list = [chall_list[3]]
+            chall_list = [chall_list[2]]
 
 
     #make sure to pass the contect (update the image 'img1': "../../../media/enemies/" + str(),)
     cont = {
         'image': "../../../media/" + str(items[0].image),
-        'enemy_img': "../../../media/" + str(chall_list[0].image),
+        'enemy_img': "../../../media/enemies/" + str(chall_list[0].image),
         'pet_hp': pet_health,
         'en_hp': chall_list[0].enemy_hp
     }
@@ -83,6 +84,13 @@ def battle_action(request):
     global pet_health
     global pet_strength
 
+    # decrement healths
+    if request.POST.get("noth"):
+        pet_health -= chall_list[0].enemy_att
+    else:
+        pet_health -= chall_list[0].enemy_att
+        chall_list[0].enemy_hp -= pet_strength
+
     #check for win/lose, clear DB
     if pet_health <0:
         print("Pet lost :(")
@@ -94,7 +102,7 @@ def battle_action(request):
         Challenge.objects.all().delete()
         return render(request, 'Map/win_screen.html')
 
-    #decrement healths
+
     pet_health -=chall_list[0].enemy_att
     chall_list[0].enemy_hp -= pet_strength
 

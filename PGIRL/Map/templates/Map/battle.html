@@ -14,6 +14,28 @@
                 right: 40%;
             }
 
+            .php{
+                border: 4px solid #7d7b7a;
+                background: floralwhite;
+                font-size: 22px;
+                position: absolute;
+                padding-left: 4px;
+                left: 20%;
+              top: 10%;
+
+            }
+
+            .ehp{
+                border: 4px solid #7d7b7a;
+                background: floralwhite;
+                font-size: 22px;
+                position: absolute;
+                padding-left: 4px;
+                left: 60%;
+              top: 10%;
+
+            }
+
             .d{
                 text-align: center;
                 display: inline-block;
@@ -23,7 +45,7 @@
             body{
                 background: black;
                 background-image: url("../../../media/HTML_Images/chall_bg.png");
-                background-size: 87%;
+                background-size: 81%;
                 background-position-y: -10px;
                 background-position-x: 80px;
 
@@ -53,24 +75,40 @@
               top: 87%;
             }
 
+            .attack{
+                font-size: 30px;
+                position: absolute;
+              left: 20%;
+              top: 87%;
+            }
+
+            .nothing{
+                font-size: 30px;
+                position: absolute;
+              left: 40%;
+              top: 87%;
+            }
+
             .btn:hover {background-color: #d9d0c5}
   .btn:active {
   background-color: #d9d0c5;
 }
 
         .img{
-            height: 400px;
-            width: 400px;
+            height: 300px;
+            width: 300px;
         }
 
         .img-1{
             position: absolute;
             left: 10%;
-            top:80%;
+            top:35%;
         }
         .img-2{
+            height: 400px;
+            width: 400px;
             position: absolute;
-            left: 80%;
+            left: 55%;
             top:10%;
         }
 
@@ -82,13 +120,16 @@
     <img class="img img-2" src="{{enemy_img}}">
 
     <div class="myDiv">
-        <form method = "post" action="{% url 'battle_action' %}">
+        <form id="att" method = "post" action="{% url 'battle_action' %}">
             {% csrf_token %}
-            <div class="d"> </div>
-            <button id="attack" class="btn" type="submit">ATTACK!</button>
-            <button id="nothing" class="btn" type="submit">DO NOTHING!</button>
+            <button id="attack" class="btn attack" type="submit">ATTACK!</button>
         </form>
-        <p>Pet HP: {{pet_hp}} Enemy_HP: {{en_hp}}</p>
+        <form id="noth" method = "post" action="{% url 'battle_action' %}">
+            {% csrf_token %}
+            <button id="nothing" class="btn nothing" type="submit">DO NOTHING!</button>
+        </form>
+        <p class="php" >Pet HP: {{pet_hp}}</p>
+        <p class="ehp" >Enemy HP: {{en_hp}}</p>
     </div>
 
     <form method = "post" action="{% url 'map' %}">
