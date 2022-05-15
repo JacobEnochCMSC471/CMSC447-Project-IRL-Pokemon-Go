@@ -94,7 +94,7 @@ class Photo_Data(models.Model):
         random_values = [None] * 4
 
         for i in range(4):  # Generate a list of 4 random values, ranging between 0 and 100
-            random_values[i] = random.randrange(0, 100)
+            random_values[i] = random.randrange(6, 10)
 
         self.stat_hp = random_values[0]
         self.stat_attack = random_values[1]

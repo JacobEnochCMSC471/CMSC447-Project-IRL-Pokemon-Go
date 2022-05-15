@@ -5,8 +5,15 @@ from PGIRL.Inventory.models import Item
 from PGIRL.Photo_Uploader.models import Photo_Data
 
 class Challenge(models.Model):
-    required_level=models.IntegerField()
-    required_experience=models.IntegerField()
+    #should have level req, ex req, minimum pet health, type of challenge, png, if its done
+    required_level=models.IntegerField(default=1)
+    required_experience=models.IntegerField(default=0)
+    required_health = models.IntegerField(default=0)
+    challenge_type = models.CharField(max_length=10, default="Battle")
+    image_ = models.CharField(max_length=20, default="")
+    completed = models.BooleanField(default=False)
+    enemy_hp=models.IntegerField(default=15)
+    enemy_att = models.IntegerField(default=2)
 
     def reward_player(pet: Photo_Data):
         reward_stats = random.randint(0, 1)
