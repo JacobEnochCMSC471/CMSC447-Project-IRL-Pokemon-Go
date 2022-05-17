@@ -1,5 +1,6 @@
 from django.db import models
 import random
+from datetime import datetime
 from Inventory.models import Item
 
 from Photo_Uploader.models import Photo_Data
@@ -39,6 +40,8 @@ class Challenge(models.Model):
                 num_increases -= 1
         
         if reward_item:
+
+            random.seed(datetime.now())
             items = {
                 "Stick": ["A basic stick", 1, 'media/items/branch.png'],
                 "Rock": ["It's a rock", 1, 'media/items/rock.png'],

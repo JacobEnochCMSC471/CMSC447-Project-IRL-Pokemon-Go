@@ -49,7 +49,7 @@ def chall(request):
     global pet
 
     # check if they have a pet.. if not then kick them out!
-    items = list(Photo_Data.objects.filter(user_id=2))
+    items = list(Photo_Data.objects.all())
 
     # only pick a random pet IF there's an image hehe
     if len(items) == 0:

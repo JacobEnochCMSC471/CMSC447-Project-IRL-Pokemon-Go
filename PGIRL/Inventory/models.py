@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Item(models.Model):
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(primary_key=False, default=0)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=300)
     quantity = models.IntegerField()
