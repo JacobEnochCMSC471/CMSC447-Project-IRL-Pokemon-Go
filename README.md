@@ -1,5 +1,5 @@
 # CMSC447-Project-IRL-Pokemon-Go
-A project that consists of 4 iterations of an agile development cycle. 
+A project that consists of 4 iterations of an agile development cycle, using the Django webframework. 
 
 ### Current Release: v0.4-prealpha 
 
